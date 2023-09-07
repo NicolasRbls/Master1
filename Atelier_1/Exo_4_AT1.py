@@ -1,4 +1,5 @@
 from datetime import date
+import Exo_2_AT1
 
 def date_est_valide(jour: int,mois: int,annee: int)->bool:
     """
@@ -21,7 +22,7 @@ def date_est_valide(jour: int,mois: int,annee: int)->bool:
 
     # Vérification pour février en cas d'année bissextile
     if mois == 2:
-        if (annee % 4 == 0 and annee % 100 != 0) or (annee % 400 == 0):
+        if Exo_2_AT1.est_bissextile(annee):
             jours_par_mois[1] = 29
 
     # Vérification du jour
