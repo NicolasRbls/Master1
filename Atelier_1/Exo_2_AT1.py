@@ -1,4 +1,17 @@
 def est_bissextile(annee):
+    """
+       Vérifie si une année est bissextile ou non.
+
+       Une année bissextile est définie par les règles suivantes :
+       - Elle est divisible par 4.
+       - Elle n'est pas divisible par 100, sauf si elle est également divisible par 400.
+
+       Args:
+           annee (int): L'année à vérifier.
+
+       Returns:
+           bool: True si l'année est bissextile, False sinon.
+    """
     if (annee % 4 == 0 and annee % 100 != 0) or annee % 400 == 0:
         return True
     else:
@@ -6,6 +19,10 @@ def est_bissextile(annee):
 
 # Fonction de test
 def tester_est_bissextile():
+    """
+        Effectue un test de la fonction est_bissextile en utilisant différentes années
+        et affiche les résultats des tests.
+    """
     test_cases = {
         2000: True,  # Bissextile car divisible par 400
         2020: True,  # Bissextile car divisible par 4 et non par 100
