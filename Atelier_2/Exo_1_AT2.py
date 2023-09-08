@@ -46,8 +46,7 @@ def somme_v3(L: list)->int:
     return somme_totale
 """"
 La version la plus adaptée dépend du contexte et des préférences de programmation. En général, 
-la version basée sur la boucle for avec itération sur les éléments de la liste (Version 2) est la plus pythonique 
-et la plus lisible.
+la version basée sur la boucle for avec itération sur les éléments de la liste (Version 2) est la plus lisible.
 """
 
 def test_exercice1():
