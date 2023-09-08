@@ -204,4 +204,4 @@ def ind_max(L: list)->int:
 
     return max_index
 
-test_exercice1()
+#test_exercice1()
