@@ -31,17 +31,19 @@ def repartir_vitrines(nbEmplacements: int, lObjets: list) -> list:
                 vitrine1.append(objet)
             else:
                 vitrine2.append(objet)
-        else:
+        elif len(vitrine2)<nbEmplacements :
             if len(vitrine2) < nbEmplacements:
                 vitrine2.append(objet)
             else:
                 vitrine1.append(objet)
+        else :
+            return None
 
     return [vitrine1, vitrine2]
 
 # Exemple d'utilisation
 nbEmplacements = 4
-lObjets = [1, 2, 2, 3, 4, 5, 5]
+lObjets = [1, 2, 2, 3, 4, 5, 5,]
 
 resultat = repartir_vitrines(nbEmplacements, lObjets)
 
