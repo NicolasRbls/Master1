@@ -225,7 +225,7 @@ def afficheHisto(F: list) -> None:
     """
 
     # Affichage graphique de l'histogramme
-    plt.hist(F, bins=range(max(F) + 2), rwidth=0.8, align='left', alpha=0.75, edgecolor='black')
+    plt.hist(F, bins=range(max(F) + 2), rwidth=0.8)
 
     # Étiquetage des axes
     plt.xlabel('Valeurs')
