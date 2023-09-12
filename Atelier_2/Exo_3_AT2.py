@@ -8,22 +8,18 @@ def separer(L: list) -> list:
     Returns:
         List[int]: La liste LSEP avec les nombres triés par catégorie.
     """
-    LSEP = []  # Initialisation de la liste LSEP
+    negatifs = []  # Initialisation de la liste pour les nombres négatifs
+    positifs = []  # Initialisation de la liste pour les nombres positifs
 
-    # Ajouter les nombres négatifs à gauche de LSEP
+    # Séparation des nombres en positifs, négatifs et zéros
     for num in L:
         if num < 0:
-            LSEP.insert(0, num)
+            negatifs.append(num)
+        elif num > 0:
+            positifs.append(num)
 
-    # Ajouter les zéros au centre de LSEP
-    for num in L:
-        if num == 0:
-            LSEP.append(num)
-
-    # Ajouter les nombres positifs à droite de LSEP
-    for num in L:
-        if num > 0:
-            LSEP.append(num)
+    # Concaténation des listes : négatifs, zéros, positifs
+    LSEP = negatifs + [0] * L.count(0) + positifs
 
     return LSEP
 
