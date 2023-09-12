@@ -223,8 +223,6 @@ def afficheHisto(F: list) -> None:
     Returns:
         None
     """
-    # Calcul de l'histogramme H
-    H = histo(F)
 
     # Affichage graphique de l'histogramme
     plt.hist(F, bins=range(max(F) + 2), rwidth=0.8, align='left', alpha=0.75, edgecolor='black')
