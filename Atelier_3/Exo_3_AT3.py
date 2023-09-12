@@ -57,8 +57,9 @@ def runGame():
     print(mot_secret)
     erreurs = 0
     erreurs_max = 5
+    sortie =True
 
-    while erreurs < erreurs_max:
+    while erreurs < erreurs_max and sortie:
         lettre = input("Devinez une lettre : ")
         indices = places_lettre(lettre, mot_secret)
 
@@ -85,7 +86,7 @@ def runGame():
 
         if '_' not in outputStr(mot_secret, sertif_indices):
             print("Félicitations, vous avez trouvé le mot :", mot_secret," en ",erreurs," erreurs")
-            break
+            sortie=False
 
     if erreurs == erreurs_max:
         print("Désolé, vous avez atteint le nombre maximum d'erreurs. Le mot était :", mot_secret)
