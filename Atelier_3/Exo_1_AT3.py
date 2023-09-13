@@ -5,7 +5,9 @@ def full_name(str_arg: str) -> str:
             test_espace = True
     if test_espace == False:
         return str_arg
-
+    nb_espace = str_arg.count(' ')
+    if nb_espace!=1:
+        return None
     # Divise la chaîne en nom et prénom en utilisant l'espace comme séparateur
     parts = str_arg.split()
 
@@ -78,9 +80,9 @@ def test_full_name():
     else:
         print(f"Échec du test 1 : {resultat}")
 
-    str_variable2test = "john doe"
+    str_variable2test = "john_doe"
     resultat = full_name(str_variable2test)
-    if resultat == "JOHN Doe":
+    if resultat == None:
         print("Test 2 réussi.")
     else:
         print(f"Échec du test 2 : {resultat}")
