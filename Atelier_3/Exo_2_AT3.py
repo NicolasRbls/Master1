@@ -26,7 +26,7 @@ def commence_par(mot: str, prefixe: str) -> bool:
     Returns:
         bool: True si le mot commence par le préfixe, False sinon.
     """
-    return mot.startswith(prefixe)
+    return len(mot) >= len(prefixe) and all(mot[i] == prefixe[i] for i in range(len(prefixe)))
 
 
 def fini_par(mot: str, suffixe: str) -> bool:
@@ -40,7 +40,7 @@ def fini_par(mot: str, suffixe: str) -> bool:
     Returns:
         bool: True si le mot fini par le suffixe, False sinon.
     """
-    return mot.endswith(suffixe)
+    return len(mot) >= len(suffixe) and all(mot[-i] == suffixe[-i] for i in range(1, len(suffixe) + 1))
 
 def finissent_par(lst_mot: list, suffixe: str)->list:
     """
@@ -275,7 +275,7 @@ def test_liste_mots():
 
 
 
-"""
+
 # Appel des fonctions de test
 test_commence_par()
 test_mots_Nlettres()
@@ -283,8 +283,10 @@ test_fini_par()
 test_finissent_par()
 test_commencent_par()
 test_liste_mots()
+
 """
 #utilisation avec un chemin relatif
 nom_fichier = "../../littre.txt"
 liste_de_mots = dictionnaire(nom_fichier)
 print(liste_mots(liste_de_mots,"tra","re",7))
+"""
