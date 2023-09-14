@@ -275,7 +275,7 @@ def test_liste_mots():
 
 
 
-
+"""
 # Appel des fonctions de test
 test_commence_par()
 test_mots_Nlettres()
@@ -283,10 +283,10 @@ test_fini_par()
 test_finissent_par()
 test_commencent_par()
 test_liste_mots()
-
 """
+
 #utilisation avec un chemin relatif
 nom_fichier = "../../littre.txt"
 liste_de_mots = dictionnaire(nom_fichier)
 print(liste_mots(liste_de_mots,"tra","re",7))
-"""
+
