@@ -17,3 +17,11 @@ def gen_list_random_int(int_nbr=10, int_binf=0, int_bsup=10):
         random_numbers.append(random.randint(int_binf, int_bsup - 1))
 
     return random_numbers
+
+# Exemple d'utilisation avec des paramètres personnalisés :
+ma_liste = gen_list_random_int(15, 20, 30)
+print(ma_liste)
+
+# Exemple d'utilisation avec les valeurs par défaut :
+liste_par_defaut = gen_list_random_int()
+print(liste_par_defaut)
