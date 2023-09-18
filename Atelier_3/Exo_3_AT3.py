@@ -123,11 +123,11 @@ def runGame():
         'normal': (7, 8),  # Niveau normal : mots de 7 à 8 lettres
         'hard': (9, 19)  # Niveau difficile : mots de 9 lettres a 19 qui est le plus grand mot de ma liste
     }
-
-    while True:
+    continue_while = True
+    while continue_while:
         niveau = input("Choisissez un niveau (easy, normal, hard) ou quit pour quitter : ").lower()
         if niveau == 'quit':
-            break
+            continue_while=False
         elif niveau in niveaux:
             niv_choisi = random.randint(niveaux[niveau][0],niveaux[niveau][1])
             liste_mot = build_list(URL_CAPITALES)
@@ -135,57 +135,57 @@ def runGame():
             mot_secret = select_word(dict_mot,niv_choisi)
             if not mot_secret:
                 print("Aucun mot disponible pour ce niveau.")
-                continue
+            else :
 
-            erreurs = 0
-            erreurs_max = 5
-            sertif_indices = []
-            sortie = True
+                erreurs = 0
+                erreurs_max = 5
+                sertif_indices = []
+                sortie = True
 
-            # Affichage du mot pour la première fois
-            print(outputStr(mot_secret, sertif_indices))
-
-            while erreurs < erreurs_max and sortie:
-                lettre = input("Devinez une lettre : ")
-                indices = places_lettre(lettre, mot_secret)
-
-                if indices:
-                    for indice in indices:
-                        sertif_indices.append(indice)
-                else:
-                    erreurs += 1
-
+                # Affichage du mot pour la première fois
                 print(outputStr(mot_secret, sertif_indices))
-                print("Erreurs :", erreurs, "/", erreurs_max)
 
-                # Dessin du pendu en fonction du nombre d'erreurs
-                if erreurs == 1:
-                    print("|______")
-                elif erreurs == 2:
-                    print("|/ \\")
-                    print("|______")
-                elif erreurs == 3:
-                    print("| T")
-                    print("|/ \\")
-                    print("|______")
-                elif erreurs == 4:
-                    print("| O")
-                    print("| T")
-                    print("|/ \\")
-                    print("|______")
-                elif erreurs == 5:
-                    print("|---]")
-                    print("| O")
-                    print("| T")
-                    print("|/ \\")
-                    print("|______")
+                while erreurs < erreurs_max and sortie:
+                    lettre = input("Devinez une lettre : ")
+                    indices = places_lettre(lettre, mot_secret)
 
-                if '_' not in outputStr(mot_secret, sertif_indices):
-                    print("Félicitations, vous avez trouvé le mot :", mot_secret, " en ", erreurs, " erreurs")
-                    sortie = False
+                    if indices:
+                        for indice in indices:
+                            sertif_indices.append(indice)
+                    else:
+                        erreurs += 1
 
-            if erreurs == erreurs_max:
-                print("Désolé, vous avez atteint le nombre maximum d'erreurs. Le mot était :", mot_secret)
+                    print(outputStr(mot_secret, sertif_indices))
+                    print("Erreurs :", erreurs, "/", erreurs_max)
+
+                    # Dessin du pendu en fonction du nombre d'erreurs
+                    if erreurs == 1:
+                        print("|______")
+                    elif erreurs == 2:
+                        print("|/ \\")
+                        print("|______")
+                    elif erreurs == 3:
+                        print("| T")
+                        print("|/ \\")
+                        print("|______")
+                    elif erreurs == 4:
+                        print("| O")
+                        print("| T")
+                        print("|/ \\")
+                        print("|______")
+                    elif erreurs == 5:
+                        print("|---]")
+                        print("| O")
+                        print("| T")
+                        print("|/ \\")
+                        print("|______")
+
+                    if '_' not in outputStr(mot_secret, sertif_indices):
+                        print("Félicitations, vous avez trouvé le mot :", mot_secret, " en ", erreurs, " erreurs")
+                        sortie = False
+
+                if erreurs == erreurs_max:
+                    print("Désolé, vous avez atteint le nombre maximum d'erreurs. Le mot était :", mot_secret)
         else:
             print("Niveau invalide. Veuillez choisir parmi les niveaux disponibles (easy, normal, hard) ou quit.")
 
