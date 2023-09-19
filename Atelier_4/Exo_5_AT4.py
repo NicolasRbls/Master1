@@ -83,7 +83,7 @@ plt.grid(True)
 
 
 
-def perf_mix_V2(func1: callable, func2: callable, list_sizes: list, num_executions: int , nb_elm: int):
+def perf_extract(func1: callable, func2: callable, list_sizes: list, num_executions: int, nb_elm: int):
     """
     Compare les temps d'exécution moyens de deux fonctions de mélange pour différentes tailles de listes.
 
@@ -141,7 +141,7 @@ num_executions = 10
 int_nbr_of_element_to_extract = 5
 
 # Obtenez les résultats des temps d'exécution moyens pour extract_elements_list et random.sample
-results_2 = perf_mix_V2(Exo_4_AT4.extract_elements_list, random.sample, list_sizes, num_executions, int_nbr_of_element_to_extract)
+results_2 = perf_extract(Exo_4_AT4.extract_elements_list, random.sample, list_sizes, num_executions, int_nbr_of_element_to_extract)
 
 # Extrayez les résultats pour chaque fonction
 times_extract_elements_list = results_2[0]
