@@ -26,7 +26,7 @@ def extract_elements_list(list_in_which_to_choose, int_nbr_of_element_to_extract
 
     return extracted_elements
 
-
+"""
 # Test de votre code
 lst_sorted = [i for i in range(10)]
 print('Liste de départ', lst_sorted)
@@ -35,3 +35,4 @@ print('La sous liste extraite est', sublist)
 print('Liste de départ après appel de la fonction est', lst_sorted)
 # Utilisation de assert pour vérifier que les listes sont différentes.
 assert lst_sorted != sublist, "Les deux listes doivent être différentes après l'appel à mixList."
+"""

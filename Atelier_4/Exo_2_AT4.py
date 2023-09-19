@@ -18,7 +18,7 @@ def mix_list(list_to_mix):
         mixed_list[i], mixed_list[j] = mixed_list[j], mixed_list[i]
 
     return mixed_list
-
+"""
 # Test de votre code
 lst_sorted = [i for i in range(10)]
 print('Liste triée de départ', lst_sorted)
@@ -28,3 +28,4 @@ print('Liste triée de départ après appel à mixList, elle doit être inchang�
 
 # Utilisation de assert pour vérifier que les listes sont différentes.
 assert lst_sorted != mixed_list, "Les deux listes doivent être différentes après l'appel à mixList."
+"""
