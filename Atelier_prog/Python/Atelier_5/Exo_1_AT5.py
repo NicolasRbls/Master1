@@ -89,6 +89,27 @@ listes =[[1,2],[3,4],[5,6]]
 print(concat_list(listes))
 """
 
+def separe(lst: list)->tuple:
+    # Cas de base : si la liste est vide, retourner deux listes vides
+    if not lst:
+        return ([],[])
 
+    # Séparer le premier élément de la liste
+    premier_element = lst[0]
 
+    # Récursivement, séparer le reste de la liste
+    listepairs, listeimpairs = separe(lst[1:])
 
+    # Ajouter le premier élément à la liste appropriée
+    if premier_element % 2 == 0:
+        return [premier_element] + listepairs, listeimpairs
+    else:
+        return listepairs, [premier_element] + listeimpairs
+"""
+# Exemple d'utilisation de la fonction
+ma_liste = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+print(separe(ma_liste))
+pairs, impairs = separe(ma_liste)
+print("Éléments pairs :", pairs)
+print("Éléments impairs :", impairs)
+"""
