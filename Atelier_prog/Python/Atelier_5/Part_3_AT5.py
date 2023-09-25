@@ -120,14 +120,8 @@ def matriceIncidence(mat):
     nb_sommets = mat.shape[0]
     nb_arcs = np.count_nonzero(mat)  # Comptez le nombre d'arcs non nuls dans la matrice
 
-    # Initialisez une liste vide pour stocker les arêtes
-    arretes = []
-
-    # Parcourez la matrice d'adjacence pour détecter les arêtes
-    for i in range(nb_sommets):
-        for j in range(nb_sommets):
-            if mat[i][j] != 0:
-                arretes.append((i, j))  # Ajoutez l'arête (i, j)
+    # Initialisez une liste stocker les arêtes
+    arretes = listeArcs(mat)
 
     # Construisez la matrice d'incidence
     matrice_incidence = np.zeros((nb_sommets, nb_arcs), dtype=int)
