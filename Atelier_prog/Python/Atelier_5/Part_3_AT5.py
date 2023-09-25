@@ -32,32 +32,38 @@ matrice_adjacence = matriceAdjacencePond(S, A)
 print("Matrice d'adjacence :")
 print(matrice_adjacence)
 """
-def lireMatriceFichier(nomfichier: str)->object:
-    matrice = []
+
+def lireMatriceFichier(nomfichier: str) -> object:
     with open(nomfichier, "r") as fichier:
         lignes = fichier.readlines()
-        for ligne in lignes:
-            # Diviser la ligne en une liste de chaînes
-            nombres_str = ligne.strip().split()
 
-            # Initialiser une liste pour stocker les entiers de cette ligne
-            nombres_int = []
+        # Lire la première ligne pour déterminer la dimension de la matrice
+        premiere_ligne = lignes[0].strip().split()
+        dimension = len(premiere_ligne)
 
-            # Convertir chaque élément en entier et les ajouter à la liste nombres_int
-            for chiffre_str in nombres_str:
-                chiffre_int = int(chiffre_str)
-                nombres_int.append(chiffre_int)
-            matrice.append(nombres_int)
-    matrice = np.array(matrice)
+        # Initialiser la matrice numpy avec des zéros
+        matrice = np.zeros((dimension, dimension), dtype=int)
+
+        # Remplir la première ligne de la matrice
+        for j, chiffre_str in enumerate(premiere_ligne):
+            matrice[0, j] = int(chiffre_str)
+
+        # Remplir le reste des lignes de la matrice
+        for i in range(1, dimension):
+            nombres_str = lignes[i].strip().split()
+            for j, chiffre_str in enumerate(nombres_str):
+                matrice[i, j] = int(chiffre_str)
+
     return matrice
+
 """
 print(lireMatriceFichier("graph0.txt"))
 print(lireMatriceFichier("graph1.txt"))
 print(lireMatriceFichier("graph2.txt"))
 print(lireMatriceFichier("graph3.txt"))
 print(lireMatriceFichier("graph4.txt"))
-"""
 
+"""
 def tousLesSommets(mat: object)->list:
     """
     Retourne une liste contenant tous les indices des sommets du graphe G défini par la matrice d'adjacence mat.
@@ -159,7 +165,7 @@ def est_voisin(matrice_adjacence, S, V):
         return True
     else:
         return False
-
+"""
 S = [1,2,3,4]
 A = [(1, 1), (2, 3), (3, 4), (4, 1), (2, 4)]
 matrice_adjacence = matriceAdjacence(S, A)
@@ -170,7 +176,7 @@ if est_voisin(matrice_adjacence, S2, V):
     print(f"Les sommets {S2} et {V} sont voisins.")
 else:
     print(f"Les sommets {S2} et {V} ne sont pas voisins.")
-
+"""
 
 
 
