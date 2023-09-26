@@ -1,5 +1,5 @@
 import random
-URL_CAPITALES = "../../capitale.txt"
+URL_CAPITALES = "capitale.txt"
 def places_lettre(ch: str, mot: str) -> list:
     """
     Recherche si le caractère ch est présent dans la chaîne mot et renvoie une liste
@@ -67,7 +67,7 @@ def build_list(fileName: str) -> list:
 
     return capitales
 
-def build_dict(lst):
+def build_dict(lst: list):
     """
        Construit un dictionnaire de mots basé sur leur longueur.
 
@@ -88,7 +88,7 @@ def build_dict(lst):
 
     return dictionnaire_mots
 
-def select_word(sorted_words, word_len):
+def select_word(sorted_words: dict, word_len: int):
     """
        Sélectionne un mot aléatoire d'une certaine longueur à partir d'un dictionnaire de mots.
 
