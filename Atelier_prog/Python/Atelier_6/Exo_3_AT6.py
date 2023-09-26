@@ -133,16 +133,11 @@ def retraits_supérieurs_a(transactions: list, montant: float) -> list:
 
 #-------------------------------------------------TEST------------------------------------------------------------------
 transactions = [
-{'client_id': 1, 'date': '01/01/2022', 'type': 'dépôt', 'montant': 1000,
-'devise': 'EUR'},
-{'client_id': 2, 'date': '03/01/2022', 'type': 'retrait', 'montant': 200,
-'devise': 'USD'},
-{'client_id': 1, 'date': '04/01/2022', 'type': 'dépôt', 'montant': 500,
-'devise': 'EUR'},
-{'client_id': 2, 'date': '05/01/2022', 'type': 'dépôt', 'montant': 300,
-'devise': 'USD'},
-{'client_id': 3, 'date': '05/01/2022', 'type': 'dépôt', 'montant': 700,
-'devise': 'EUR'}
+    {'client_id': 1, 'date': '01/01/2022', 'type': 'dépôt', 'montant': 1000,'devise': 'EUR'},
+    {'client_id': 2, 'date': '03/01/2022', 'type': 'retrait', 'montant': 200,'devise': 'USD'},
+    {'client_id': 1, 'date': '04/01/2022', 'type': 'dépôt', 'montant': 500,'devise': 'EUR'},
+    {'client_id': 2, 'date': '05/01/2022', 'type': 'dépôt', 'montant': 300,'devise': 'USD'},
+    {'client_id': 3, 'date': '05/01/2022', 'type': 'dépôt', 'montant': 700,'devise': 'EUR'}
 ]
 # Taux de conversion pour la devise par rapport à l'EUR
 taux_conversion = {'USD': 0.85, 'GBP': 1.1}
