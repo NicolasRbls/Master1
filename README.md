@@ -1,4 +1,4 @@
-#Projet de Licence 3 Informatique - Université de Corte
+Projet de Licence 3 Informatique - Université de Corte
 Bienvenue sur le référentiel GitHub de mes projets et travaux de ma Licence 3 en Informatique à l'Université de Corte. Ce référentiel contient une collection de programmes, exercices, et projets liés à différents cours et domaines de l'informatique.
 
 Structure du Référentiel
