@@ -117,26 +117,27 @@ def matriceIncidence(mat):
     Returns:
         matrice: La matrice d'incidence du graphe.
     """
-    nb_sommets = mat.shape[0]
-    nb_arcs = np.count_nonzero(mat)  # Comptez le nombre d'arcs non nuls dans la matrice
 
-    # Initialisez une liste stocker les arêtes
+    #une liste pour stocker les arêtes
     arretes = listeArcs(mat)
+
+    nb_sommets = len(tousLesSommets(mat))
+    nb_arcs = len(arretes) #Comptez le nombre d'arcs dans la matrice
 
     # Construisez la matrice d'incidence
     matrice_incidence = np.zeros((nb_sommets, nb_arcs), dtype=int)
 
     for idx_arrete, arrete in enumerate(arretes):
         i, j = arrete
-        matrice_incidence[i][idx_arrete] = -1
-        matrice_incidence[j][idx_arrete] = 1
+        matrice_incidence[i][idx_arrete] = 1
+        matrice_incidence[j][idx_arrete] = -1
 
     return matrice_incidence
 
 """
 # Exemple d'utilisation avec une matrice d'adjacence
-S = [1,2,3,4]
-A = [(1, 1), (2, 3), (3, 4), (4, 1), (2, 4)]
+S = [0,1,2,3,4]
+A = [(0, 1), (0, 2), (1, 2), (1, 4), (2, 3), (3,4),(4,2)]
 matrice_adjacence = matriceAdjacence(S, A)
 matrice_incidence = matriceIncidence(matrice_adjacence)
 print("Matrice d'incidence :\n", matrice_incidence)
