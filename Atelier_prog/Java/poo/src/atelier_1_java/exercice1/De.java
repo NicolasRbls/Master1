@@ -4,11 +4,14 @@ import java.util.Random;
 
 public class De {
     private String nom;
-    private int nbFaces;
-    private static Random r = new Random();
+    protected int nbFaces;
+    protected static Random r = new Random();
+    private static int nombreDesCrees = 0; // Variable de classe pour compter le nombre de Dés créés
+
     
 
     public De(String nom, int nbFaces) {
+        this.nombreDesCrees++;
         this.nom = nom;
         if (validerNbFaces(nbFaces)) {
             this.nbFaces = nbFaces;
@@ -19,12 +22,12 @@ public class De {
 
      // Constructeur par défaut avec 6 faces et nom par défaut "De"
      public De() {
-        this("De", 6);
+        this("Dé n°" + nombreDesCrees, 6);
     }
 
     // Constructeur avec un nombre de faces spécifié
     public De(int nbFaces) {
-        this("De", nbFaces);
+        this("Dé n°" + nombreDesCrees, nbFaces);
     }
 
     // Constructeur avec un nom spécifié
@@ -58,5 +61,32 @@ public class De {
         int resultatLancer = r.nextInt(nbFaces) + 1;
         return resultatLancer;
     }
+    
+    // Surcharge de la méthode pour lancer le dé nb fois et retourner le meilleur résultat
+    public int lancer(int nb) {
+        if (nb <= 0) {
+            throw new IllegalArgumentException("Le nombre de lancers doit être supérieur à zéro.");
+        }
+
+        int meilleurLancer = lancer(); // Lancer initial pour initialiser meilleurLancer
+
+        for (int i = 1; i < nb; i++) {
+            int lancerActuel = lancer(); // Lancer actuel
+            if (lancerActuel > meilleurLancer) {
+                meilleurLancer = lancerActuel; // Mettre à jour le meilleur résultat
+            }
+        }
+
+        return meilleurLancer;
+    }
+
+    public String toString() {
+        return "Dé '" + nom + "' avec " + nbFaces + " faces";
+    }
+
+    public boolean equals(De compDe) {
+        return this.nbFaces == compDe.getNbFaces() && this.nom.equals(compDe.getNom());
+    }
+
 }
 
