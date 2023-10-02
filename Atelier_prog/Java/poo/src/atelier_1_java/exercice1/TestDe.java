@@ -13,5 +13,8 @@ public class TestDe {
         // Créez une instance de Dé avec un nom spécifié
         De deAvecNom = new De("MonDé");
         System.out.println("Dé avec nom 'MonDé' : " + deAvecNom.getNom() + " avec " + deAvecNom.getNbFaces() + " faces");
+        
+        System.out.println("Dé lancé : " + deParDefaut.lancer());
     }
+
 }

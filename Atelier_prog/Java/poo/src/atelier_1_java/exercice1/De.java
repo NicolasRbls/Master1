@@ -1,8 +1,11 @@
 package atelier_1_java.exercice1;
 
+import java.util.Random;
+
 public class De {
     private String nom;
     private int nbFaces;
+    private static Random r = new Random();
     
 
     public De(String nom, int nbFaces) {
@@ -47,6 +50,13 @@ public class De {
 
     private boolean validerNbFaces(int nbFaces) {
         return nbFaces >= 3 && nbFaces <= 120;
+    }
+
+    // Méthode pour lancer le dé et retourner la valeur du lancer
+    public int lancer() {
+        // Générer un nombre aléatoire entre 1 et nbFaces inclus
+        int resultatLancer = r.nextInt(nbFaces) + 1;
+        return resultatLancer;
     }
 }
 
