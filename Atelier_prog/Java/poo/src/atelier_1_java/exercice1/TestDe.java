@@ -1,4 +1,8 @@
 package atelier_1_java.exercice1;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestDe {
     public static void main(String[] args) {
         //Dé qui sert au test de l'incrémentation
@@ -33,11 +37,37 @@ public class TestDe {
         // Création d'un dé pipé avec 6 faces et une valeur minimale de 4
         DePipe dePipe = new DePipe("MonDéPipe", 6, 4);
 
+        System.out.println(dePipe);
+
         // Lancer le dé pipé plusieurs fois
+        System.out.println(dePipe);
         for (int i = 0; i < 3; i++) {
             int resultatLancer = dePipe.lancer();
             System.out.println("Résultat du lancer " + (i + 1) + " : " + resultatLancer);
         }
+
+        // Création d'un dé à effet mémoire avec 6 faces
+        DeEffetMemoire deMemoire = new DeEffetMemoire("MonDéMemoire", 6);
+
+        // Lancer le dé à effet mémoire plusieurs fois
+        System.out.println(deMemoire);
+        for (int i = 0; i < 4; i++) {
+            int resultatLancer = deMemoire.lancer();
+            System.out.println("Résultat du lancer " + (i + 1) + " : " + resultatLancer);
+        }
+
+        // Création d'un dé personnalisé avec des faces personnalisées
+        List<Object> indicesFaces = new ArrayList<>();
+        indicesFaces.add("Gagné");
+        indicesFaces.add("Perdu"); 
+        indicesFaces.add("Relancez"); 
+        indicesFaces.add("Passer votre tour");
+
+        DePersonnalise dePerso = new DePersonnalise("MonDéPerso", indicesFaces);
+
+        // Afficher la valeur de la face lancée
+        System.out.println(dePerso);
+        System.out.println("Résultat du lancer  : " + dePerso.afficherValeurLancee());
     }
 
 }

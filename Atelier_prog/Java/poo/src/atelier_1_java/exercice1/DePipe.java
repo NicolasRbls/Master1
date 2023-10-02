@@ -1,7 +1,5 @@
 package atelier_1_java.exercice1;
 
-import java.util.Random;
-
 public class DePipe extends De {
     private int valeurMinimale;
 
