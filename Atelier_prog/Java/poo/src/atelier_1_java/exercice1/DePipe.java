@@ -10,7 +10,6 @@ public class DePipe extends De {
         if (validerValeurMinimale(valeurMinimale)) {
             this.valeurMinimale = valeurMinimale;
         } else {
-            System.out.println("Erreur : La valeur minimale doit être supérieure ou égale à 1.");
             throw new IllegalArgumentException("La valeur minimale doit être supérieure ou égale à 1.");
         }
     }

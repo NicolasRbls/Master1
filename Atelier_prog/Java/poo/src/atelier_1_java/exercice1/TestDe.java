@@ -34,7 +34,7 @@ public class TestDe {
         DePipe dePipe = new DePipe("MonDéPipe", 6, 4);
 
         // Lancer le dé pipé plusieurs fois
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
             int resultatLancer = dePipe.lancer();
             System.out.println("Résultat du lancer " + (i + 1) + " : " + resultatLancer);
         }
