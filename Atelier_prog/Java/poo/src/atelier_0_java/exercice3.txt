@@ -1,0 +1,21 @@
+1) La classe Math du package java.lang ne possède pas d'attributs. Elle est composée uniquement de méthodes statiques.
+
+2) La particularité des méthodes de la classe Math est qu'elles sont toutes statiques, ce qui signifie que vous n'avez pas besoin d'instancier un objet de la classe Math pour les utiliser. 
+3) Pour générer un nombre aléatoire compris entre 0 (inclus) et 1 (exclus), vous pouvez utiliser la méthode statique Math.random(). Sa signature est la suivante :
+
+java
+Copy code
+public static double random()
+Cette méthode renvoie un nombre aléatoire de type double dans l'intervalle [0, 1).
+
+4) Il y a deux méthodes nommées "max" dans la classe Math, mais elles ont des signatures différentes pour prendre en charge différents types de données. Voici les deux méthodes :
+
+public static int max(int a, int b): Cette méthode renvoie le plus grand des deux entiers a et b.
+
+public static long max(long a, long b): Cette méthode renvoie le plus grand des deux longs a et b.
+
+Les différences résident dans les types de données qu'elles acceptent et renvoient.
+
+5) a) L'instruction int x = Math.max(5); n'est pas correcte au niveau syntaxique car la méthode max nécessite deux arguments. Vous obtiendrez une erreur de compilation telle que "The method max(int, int) in the type Math is not applicable for the arguments (int)".
+
+b) L'instruction int x = Math.max(5, 6); est correcte au niveau syntaxique. Elle assignera la valeur 6 à la variable x car 6 est le plus grand des deux nombres fournis en argument.

@@ -1,4 +1,4 @@
-package atelier_1_java.exercice1;
+package atelier_0_java.exercice1;
 
 public class ManipRob {
     public static void main(String[] args) {
