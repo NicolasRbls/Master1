@@ -2,6 +2,8 @@ package atelier_1_java.exercice1;
 
 import java.util.Random;
 
+import atelier_1_java.exercice2.Entier;
+
 public class De {
     private String nom;
     protected int nbFaces;
@@ -84,8 +86,15 @@ public class De {
         return "Dé '" + nom + "' avec " + nbFaces + " faces";
     }
 
-    public boolean equals(De compDe) {
-        return this.nbFaces == compDe.getNbFaces() && this.nom.equals(compDe.getNom());
+   public boolean equals(Object autreObjet) {
+        if (this == autreObjet) {
+            return true;
+        }
+        if (autreObjet == null || getClass() != autreObjet.getClass()) {
+            return false;
+        }
+        De autreDe = (De) autreObjet;
+        return nbFaces == autreDe.getNbFaces() && nom.equals(autreDe.getNom());
     }
 
 }
