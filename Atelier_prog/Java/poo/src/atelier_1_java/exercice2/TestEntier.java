@@ -25,5 +25,17 @@ public class TestEntier {
 
         System.out.println(entier1.toString()); // Affiche "5"
         System.out.println(entier1.equals(entier2)); // Affiche "true"
+
+        // Création d'un EntierFou avec des bornes de 0 à 10, une valeur initiale de 5 et un niveau de folie de 3
+        EntierFou entierFou = new EntierFou(0, 10, 3);
+
+        // Consultation de la valeur et du niveau de folie
+        System.out.println("Valeur actuelle : " + entierFou.getValeur());
+        System.out.println("Niveau de folie : " + entierFou.getNiveauDeFolie());
+
+        // Incrémentation folle
+        entierFou.incrementerFou();
+        System.out.println("Valeur après incrémentation folle : " + entierFou);
+
     }
 }

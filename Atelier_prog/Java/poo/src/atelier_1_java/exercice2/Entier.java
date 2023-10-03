@@ -47,7 +47,7 @@ public class Entier {
     public void incremente(int pas) {
         int nouvelleValeur = valeur + pas;
         if (estDansBornes(nouvelleValeur)) {
-            valeur = nouvelleValeur;
+            this.valeur = nouvelleValeur;
         } else {
             throw new IllegalArgumentException("Erreur : Incrémentation impossible, dépassement des bornes.");
         }
