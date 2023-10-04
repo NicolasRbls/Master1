@@ -59,7 +59,26 @@ public class TestPersonne {
             System.out.println("Les personnes ne sont pas égales.");
         }
 
-    
+        // Création d'une adresse pour le test
+        Adresse adresseTest = new Adresse(123, "Rue de la Paix", "75000", "Paris");
+
+        // Création d'un employé
+        Employe employeTest = Employe.createEmploye("Dupont", "Pierre", new GregorianCalendar(1990, 5, 15), adresseTest, 2000, new GregorianCalendar(2015, 0, 1));
+
+        if (employeTest != null) {
+            System.out.println(employeTest);
+            // Augmentation du salaire
+            employeTest.augmenterLeSalaire(10);
+
+            // Calcul de l'ancienneté
+            int annuite = employeTest.calculAnnuite();
+
+            // Affichage des résultats
+            System.out.println("Salaire après augmentation : " + employeTest.getSalaire());
+            System.out.println("Ancienneté de l'employé : " + annuite + " années");
+        } else {
+            System.out.println("Erreur lors de la création de l'employé.");
+        }
 
     }
 
