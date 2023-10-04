@@ -1,5 +1,3 @@
-package atelier_2_java.exercice1;
-
 /*
  * University of Corsica
  * by Marie-Laure Nivet

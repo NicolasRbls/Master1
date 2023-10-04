@@ -1,5 +1,3 @@
-package atelier_2_java.exercice1;
-
 import java.util.*;
 
 public class Personne{
