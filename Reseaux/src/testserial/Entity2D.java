@@ -8,7 +8,25 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.io.DataOutputStream;
+import java.io.DataInputStream;
+//import com.fasterxml.jackson.databind.ObjectMapper;
 
+
+/*
+ int id: Les int en Java ont une taille de 4 octets.
+String name: Si nous supposons en moyenne 10 caractères pour la chaîne et sachant qu'un charen Java utilise 2 octets, cela fait 20 octets pour name.
+float xet float y: Les float en Java ont une taille de 4 octets chacun.
+ArrayList<Integer> items: Pour l'ArrayList, nous considérons que cela coûte 4 octets pour compter le nombre d'éléments. Chaque Integerà l'intérieur coûte 4 octets.
+Faisons le total:
+id = 4 octets
+name = 20 octets
+x = 4 octets
+y = 4 octets
+items = 4 octets (pour le nombre d'éléments) + 4n octets (où n est le nombre d'éléments dans l'ArrayList)
+La taille totale en octets pour une instance de Entity2Dserait donc :
+T = 36 + 4n octets
+ */
 
 public class Entity2D implements Externalizable  {
     private static final long serialVersionUID = 1L;
@@ -111,6 +129,78 @@ public class Entity2D implements Externalizable  {
             System.out.println("Maximum items reached, cannot add more.");
         }
     }
+
+    public void toBytes(DataOutputStream data) throws IOException {
+        // Écrire l'ID
+        data.writeInt(id);
+    
+        // Écrire le nom (avec gestion de la longueur maximale pour être sûr de ne pas dépasser)
+        data.writeUTF(name.length() > 10 ? name.substring(0, 10) : name);
+    
+        // Écrire les coordonnées x et y
+        data.writeFloat(x);
+        data.writeFloat(y);
+    
+        // Écrire les éléments de l'ArrayList
+        // Commencez par écrire la taille de l'ArrayList
+        data.writeInt(items.size());
+    
+        // Écrire chaque élément de l'ArrayList
+        for (int item : items) {
+            if (item >= -128 && item <= 127) {
+                data.writeByte(item);
+            } else {
+                throw new IOException("Valeur d'item hors de la plage autorisée (-128 à 127) : " + item);
+            }
+        }
+    }
+
+    public static Entity2D fromBytes(DataInputStream data) throws IOException {
+        Entity2D entity = new Entity2D();
+        
+        // Lire et définir l'ID
+        entity.id = data.readInt();
+        
+        // Lire et définir le nom
+        entity.name = data.readUTF();
+        
+        // Lire et définir les coordonnées x et y
+        entity.x = data.readFloat();
+        entity.y = data.readFloat();
+    
+        // Lire la taille de l'ArrayList
+        int size = data.readInt();
+        entity.items = new ArrayList<>(size);
+    
+        // Lire chaque élément de l'ArrayList et l'ajouter à `items`
+        for (int i = 0; i < size; i++) {
+            entity.items.add((int) data.readByte());  // convertir byte en int
+        }
+    
+        return entity;
+    }
+    
+    /**
+     * Elle crée une instance de Entity2D à partir d'une chaîne au format JSON.
+     * @param json la chaîne au format JSON
+     * @return une nouvelle instance de Entity2D
+     * @throws IOException si une erreur se produit lors de la désérialisation
+    
+    public static Entity2D fromJson(String json) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(json, Entity2D.class);
+    }*/
+
+    /**
+     * Elle convertit l'instance actuelle en une chaîne au format JSON.
+     * @return une chaîne représentant l'instance actuelle au format JSON
+     * @throws IOException si une erreur se produit lors de la sérialisation
+     
+    public String toJson() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(this);
+    }*/
+
 
     @Override
     public String toString() {

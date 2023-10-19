@@ -9,40 +9,34 @@ public class Main {
         ent_1.putItem(7);
         ent_1.putItem(-1);
         
-        ObjectOutputStream oos = null;
-
-        // Writing into a file
+        // Serialization using DataOutputStream
         try {
-            FileOutputStream fichier = new FileOutputStream("donnees.ser");
-            oos = new ObjectOutputStream(fichier);
-            oos.writeObject(ent_1);
-            oos.flush();
-            oos.close();
-            fichier.close();
+            FileOutputStream fos = new FileOutputStream("donnees_data.ser");
+            DataOutputStream dos = new DataOutputStream(fos);
+            ent_1.toBytes(dos);
+            dos.close();
+            fos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        // Check the file size
+        File savedData = new File("donnees_data.ser");
+        System.out.println("Taille du fichier (DataOutputStream): " + savedData.length() + " octets");
+
+        // Deserialization using DataInputStream
+        Entity2D deserializedEntityData = null;
+        try {
+            FileInputStream fis = new FileInputStream("donnees_data.ser");
+            DataInputStream dis = new DataInputStream(fis);
+            deserializedEntityData = Entity2D.fromBytes(dis);
+            dis.close();
+            fis.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // How long is the file
-        File saved = new File("donnees.ser");
-        System.out.println("Taille du fichier: " + saved.length() + " octets");
-
-        // Deserializing the object
-        Entity2D deserializedEntity = null;
-        try {
-            FileInputStream fichierIn = new FileInputStream("donnees.ser");
-            ObjectInputStream ois = new ObjectInputStream(fichierIn);
-            deserializedEntity = (Entity2D) ois.readObject();
-            ois.close();
-            fichierIn.close();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        // Just to check if the deserialization worked:
-        if (deserializedEntity != null) {
-            System.out.println("Deserialized Entity Name: " + deserializedEntity.getName());
-        }
-        System.out.println(deserializedEntity);
+        // Display the deserialized object
+        System.out.println("Deserialized Entity (DataInputStream): " + deserializedEntityData);
     }
 }
