@@ -95,17 +95,17 @@ public class Dresseur {
 
         String nom = pokemonInfo.getNom();
         int evolution = pokemonInfo.getEvolutionStage();
-        int PV, attaque, defense, vitesse, PC = 0;
+        int PC , PV, attaque, defense, vitesse;
 
         // Logique pour définir les statistiques basées sur le stade d'évolution
         if (evolution == 1) {
-            PV = random.nextInt(91) + 10; // Entre 10 et 100
+            PC = PV = random.nextInt(91) + 10; // Entre 10 et 100
             attaque = defense = vitesse = random.nextInt(21) + 10; // Entre 10 et 30
         } else if (evolution == 2) {
-            PV = random.nextInt(101) + 100; // Entre 100 et 200
+            PC = PV = random.nextInt(101) + 100; // Entre 100 et 200
             attaque = defense = vitesse = random.nextInt(31) + 30; // Entre 30 et 60
         } else {
-            PV = random.nextInt(151) + 200; // Entre 200 et 350
+            PC = PV = random.nextInt(151) + 200; // Entre 200 et 350
             attaque = defense = vitesse = random.nextInt(91) + 60; // Entre 60 et 150
         }
 
@@ -145,23 +145,19 @@ public class Dresseur {
         inventaireBonbons.put(type, bonbonsActuels + nombre);
     }
 
-    // Méthode pour faire évoluer un Pokémon
     public void evoluerPokemon(Pokemon pokemon) {
         String prochaineEvolution = determinerProchaineEvolution(pokemon.getNom());
         if (prochaineEvolution != null && !prochaineEvolution.equals("Pas d'évolution supplémentaire")) {
-            //pokemon.getTypes().get(0) renvoie le type principal du Pokémon
-            Type typePokemon = pokemon.getTypes().get(0); 
+            Type typePokemon = pokemon.getTypes().get(0); // Supposons que le type principal soit le premier de la liste
             if (inventaireBonbons.get(typePokemon) >= 5) { // Vérifie si le dresseur a au moins 5 bonbons du bon type
                 inventaireBonbons.put(typePokemon, inventaireBonbons.get(typePokemon) - 5);
     
-                // Générer un nouveau Pokémon pour l'évolution
-                Pokemon nouveauPokemon = genererPokemonAleatoire(prochaineEvolution);
-                
-                // Remplacer l'ancien Pokémon par le nouveau dans la liste des pokémons du dresseur
-                int index = pokemons.indexOf(pokemon);
-                if (index != -1) {
-                    pokemons.set(index, nouveauPokemon);
-                }
+                // Créer un nouveau Pokémon avec la prochaine évolution et les mêmes attaques
+                List<Attaque> attaquesActuelles = pokemon.getAttaques();
+                Pokemon nouveauPokemon = genererPokemonEvolue(prochaineEvolution, attaquesActuelles);
+    
+                // Remplacer l'ancien Pokémon par le nouveau dans la liste des Pokémon du dresseur
+                pokemons.set(pokemons.indexOf(pokemon), nouveauPokemon);
     
                 System.out.println(pokemon.getNom() + " a évolué en " + prochaineEvolution + " !");
             } else {
@@ -171,5 +167,47 @@ public class Dresseur {
             System.out.println("Aucune évolution supplémentaire pour " + pokemon.getNom());
         }
     }
+    
+    private Pokemon genererPokemonEvolue(String nomEvolue, List<Attaque> attaquesActuelles) {
+        // Utilisez les informations du Pokedex pour générer le nouveau Pokémon évolué
+        Pokedex.PokemonInfo infoEvolue = pokedex.getPokemons().stream()
+                .filter(p -> p.getNom().equals(nomEvolue))
+                .findFirst()
+                .orElse(null);
+    
+        if (infoEvolue != null) {
+            int PC , PV, attaque, defense, vitesse;
+            Random random = new Random();
+    
+            // Générer des statistiques en fonction de l'évolution
+            if (infoEvolue.getEvolutionStage() == 2) {
+                PC = PV = random.nextInt(101) + 100; // Entre 100 et 200
+                attaque = defense = vitesse = random.nextInt(31) + 30; // Entre 30 et 60
+            } else {
+                PC = PV = random.nextInt(151) + 200; // Entre 200 et 350
+                attaque = defense = vitesse = random.nextInt(91) + 60; // Entre 60 et 150
+            }
+    
+            return new Pokemon(nomEvolue, PV, PC , attaque, defense, vitesse, new ArrayList<>(), List.of(infoEvolue.getType()), attaquesActuelles);
+        }
+    
+        return null; // Retourner null si l'évolution n'est pas trouvée
+    }
+    
+    public Map<Type, Integer> getInventaireBonbons() {
+        return inventaireBonbons;
+    }
 
+    public void obtenirBonbonsAleatoires() {
+        Random random = new Random();
+        Type typeAleatoire = Type.values()[random.nextInt(Type.values().length)];
+        int nombreBonbons = random.nextInt(3) + 1; // Générer un nombre aléatoire entre 1 et 3
+
+        // Ajouter les bonbons aléatoires à l'inventaire
+        inventaireBonbons.put(typeAleatoire, inventaireBonbons.getOrDefault(typeAleatoire, 0) + nombreBonbons);
+
+        // Afficher un message indiquant le nombre et le type de bonbons reçus
+        System.out.println("Vous avez reçu " + nombreBonbons + " bonbon(s) de type " + typeAleatoire);
+    }
+    
 }

@@ -216,10 +216,14 @@ public class Pokedex {
     }
 
     public List<String> getAllEvolutions(String nomPokemon) {
+        // Trouver la forme de base du Pokémon
+        String baseForm = trouverFormeDeBase(nomPokemon);
+        
         List<String> allEvolutions = new ArrayList<>();
-        allEvolutions.add(nomPokemon); // Ajouter le Pokémon de départ
-        List<String> currentEvolutions = evolutions.getOrDefault(nomPokemon, new ArrayList<>());
+        allEvolutions.add(baseForm); // Ajouter le Pokémon de base
     
+        // Construire la liste des évolutions à partir de la forme de base
+        List<String> currentEvolutions = evolutions.getOrDefault(baseForm, new ArrayList<>());
         while (!currentEvolutions.isEmpty()) {
             String nextEvolution = currentEvolutions.get(0); // Prendre la première évolution
             allEvolutions.add(nextEvolution);
@@ -228,6 +232,26 @@ public class Pokedex {
     
         return allEvolutions;
     }
+    
+    private String trouverFormeDeBase(String nomPokemon) {
+        for (PokemonInfo pokemon : pokemons) {
+            if (pokemon.getNom().equals(nomPokemon)) {
+                // Si le Pokémon est une forme de base
+                if (pokemon.getEvolutionStage() == 1) {
+                    return nomPokemon;
+                }
+            }
+        }
+        
+        // Si le Pokémon n'est pas une forme de base, chercher sa forme précédente
+        for (Map.Entry<String, List<String>> entry : evolutions.entrySet()) {
+            if (entry.getValue().contains(nomPokemon)) {
+                return trouverFormeDeBase(entry.getKey()); // Récursivement trouver la forme de base
+            }
+        }
+        return nomPokemon; // Retourne le nom si aucune forme de base n'est trouvée
+    }
+    
     
 
 

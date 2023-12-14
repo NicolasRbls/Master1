@@ -101,7 +101,7 @@ public class Pokemon {
 
 
      // Générer aléatoirement des attaques en fonction des types du Pokémon
-     private List<Attaque> genererAttaquesAleatoires(List<Type> types) {
+     public List<Attaque> genererAttaquesAleatoires(List<Type> types) {
         List<Attaque> attaquesGenerees = new ArrayList<>();
         Random random = new Random();
         for (Type type : types) {
