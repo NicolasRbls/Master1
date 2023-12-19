@@ -1,6 +1,5 @@
 # Création du fichier README.md avec les instructions fournies par l'utilisateur
 
-readme_content = """
 ### Guide d'Utilisation: Jeu Pokémon (Version Serveur-Client)
 
 #### Présentation
