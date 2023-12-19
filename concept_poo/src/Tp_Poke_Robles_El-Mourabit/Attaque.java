@@ -1,7 +1,11 @@
-public class Attaque {
+import java.io.Serializable;
+
+public class Attaque implements Serializable {
     private String nom;
     private int puissance;
     private Type type;
+    private static final long serialVersionUID = 1L;
+
 
     public Attaque(String nom, int puissance, Type type) {
         this.nom = nom;

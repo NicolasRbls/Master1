@@ -1,20 +1,25 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
+import java.io.Serializable;
 
-public class Pokemon {
+
+public class Pokemon  implements Serializable{
     private String nom;
     private int PC;
     private int PV;
-    private int attaque;
-    private int defense;
-    private int vitesse;
+    private long attaque;
+    private long defense;
+    private long vitesse;
     private List<Pokemon> evolutions;
     private List<Type> types;
     private List<Attaque> attaques;
+    private static final long serialVersionUID = 1L; // Numéro de version pour la sérialisation
 
     // Constructeur
-    public Pokemon(String nom, int PV, int PC, int attaque, int defense, int vitesse, List<Pokemon> evolutions, List<Type> types) {
+    public Pokemon(String nom, int PV, int PC, long attaque, long defense, long vitesse, List<Pokemon> evolutions, List<Type> types) {
         this.nom = nom;
         this.PV = PV;
         this.PC = PC;
@@ -27,7 +32,7 @@ public class Pokemon {
     }
 
     // Constructeur
-    public Pokemon(String nom, int PV, int PC, int attaque, int defense, int vitesse, List<Pokemon> evolutions, List<Type> types , List<Attaque> attaques) {
+    public Pokemon(String nom, int PV, int PC, long attaque, long defense, long vitesse, List<Pokemon> evolutions, List<Type> types , List<Attaque> attaques) {
         this.nom = nom;
         this.PV = PV;
         this.PC = PC;
@@ -51,15 +56,15 @@ public class Pokemon {
         return PV;
     }
 
-    public int getAttaque() {
+    public long getAttaque() {
         return attaque;
     }
 
-    public int getDefense() {
+    public long getDefense() {
         return defense;
     }
 
-    public int getVitesse() {
+    public long getVitesse() {
         return vitesse;
     }
 
@@ -101,21 +106,36 @@ public class Pokemon {
 
 
      // Générer aléatoirement des attaques en fonction des types du Pokémon
-     public List<Attaque> genererAttaquesAleatoires(List<Type> types) {
+    public List<Attaque> genererAttaquesAleatoires(List<Type> types) {
         List<Attaque> attaquesGenerees = new ArrayList<>();
         Random random = new Random();
+
         for (Type type : types) {
             List<Attaque> attaquesParType = Attaques.getAttaquesParType(type);
-            if (!attaquesParType.isEmpty()) {
-                attaquesGenerees.add(attaquesParType.get(random.nextInt(attaquesParType.size())));
+            Set<Attaque> attaquesUniques = new HashSet<>();
+
+            while (attaquesUniques.size() < 4 && attaquesParType.size() >= 4) {
+                Attaque attaqueAleatoire = attaquesParType.get(random.nextInt(attaquesParType.size()));
+                attaquesUniques.add(attaqueAleatoire);
             }
+
+            attaquesGenerees.addAll(attaquesUniques);
         }
+
+        // Réduire la liste à quatre attaques si plus ont été générées
+        while (attaquesGenerees.size() > 4) {
+            attaquesGenerees.remove(random.nextInt(attaquesGenerees.size()));
+        }
+
         return attaquesGenerees;
     }
+
     
 
     public List<Attaque> getAttaques() {
         return attaques;
     }
+
+   
 
 }

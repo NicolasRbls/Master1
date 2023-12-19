@@ -4,13 +4,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.io.Serializable;
 
-public class Dresseur {
+
+public class Dresseur implements Serializable {
     private String nom;
     private List<Pokemon> pokemons;
-    private Scanner scanner;
     private Pokedex pokedex; // Référence au Pokedex
     private Map<Type, Integer> inventaireBonbons;
+    private static final long serialVersionUID = 1L; // Numéro de version pour la sérialisation
+    private transient Scanner scanner; // Utilisation de transient pour exclure le Scanner de la sérialisation
+
 
 
 
@@ -33,8 +38,23 @@ public class Dresseur {
     }
 
     public void ajouterPokemon(Pokemon pokemon) {
-        pokemons.add(pokemon);
+        if (pokemons.size() < 6) {
+            pokemons.add(pokemon);
+            System.out.println("Vous avez capturé un nouveau Pokémon: " + pokemon.getNom());
+
+        } else {
+            System.out.println("Vous avez déjà 6 Pokémon. Vous ne pouvez pas en capturer plus !");
+        }
     }
+
+    public void relacherPokemon(Pokemon pokemon) {
+        if (pokemons.remove(pokemon)) {
+            System.out.println(pokemon.getNom() + " a été relâché.");
+        } else {
+            System.out.println("Impossible de relâcher " + pokemon.getNom());
+        }
+    }
+    
 
     public String getNom() {
         return nom;
@@ -49,46 +69,12 @@ public class Dresseur {
         return false;
     }
 
-    public Pokemon choisirPokemon() {
-        if (this.pokemons.isEmpty()) {
-            return null;
-        }
-
-        System.out.println("Choisissez un Pokémon:");
-        List<Integer> choixValides = new ArrayList<>();
-        int i = 1;
-        for (Pokemon pokemon : this.pokemons) {
-            if (pokemon.getPV() > 0) {
-                System.out.println(i + ". " + pokemon.getNom());
-                choixValides.add(this.pokemons.indexOf(pokemon));
-                i++;
-            }
-        }
-
-        int choix = scanner.nextInt() - 1;
-        if (choix >= 0 && choix < choixValides.size()) {
-            return this.pokemons.get(choixValides.get(choix));
-        } else {
-            System.out.println("Choix invalide.");
-            return choisirPokemon();
-        }
-    }
-
-    public Pokemon choisirPokemon(int index) {
-        if (index < 0 || index >= this.pokemons.size()) {
-            return null;
-        }
-    
-        return this.pokemons.get(index);
-    }
-
     public void chasserPokemon() {
         Pokemon pokemon = genererPokemonAleatoire();
-        pokemons.add(pokemon);
-        System.out.println("Vous avez capturé un nouveau Pokémon: " + pokemon.getNom());
+        ajouterPokemon(pokemon);
     }
 
-    private Pokemon genererPokemonAleatoire() {
+    public Pokemon genererPokemonAleatoire() {
         Random random = new Random();
         List<Pokedex.PokemonInfo> tousPokemons = pokedex.getPokemons();
         Pokedex.PokemonInfo pokemonInfo = tousPokemons.get(random.nextInt(tousPokemons.size()));
@@ -99,20 +85,35 @@ public class Dresseur {
 
         // Logique pour définir les statistiques basées sur le stade d'évolution
         if (evolution == 1) {
-            PC = PV = random.nextInt(91) + 10; // Entre 10 et 100
-            attaque = defense = vitesse = random.nextInt(21) + 10; // Entre 10 et 30
+            PC = random.nextInt(91) + 10; // Entre 10 et 100
+            PV = random.nextInt(91) + 10; // Entre 10 et 100
+            attaque =  random.nextInt(21) + 10;
+            defense =  random.nextInt(21) + 10;
+            vitesse = random.nextInt(21) + 10; // Entre 10 et 30
         } else if (evolution == 2) {
-            PC = PV = random.nextInt(101) + 100; // Entre 100 et 200
-            attaque = defense = vitesse = random.nextInt(31) + 30; // Entre 30 et 60
-        } else {
-            PC = PV = random.nextInt(151) + 200; // Entre 200 et 350
-            attaque = defense = vitesse = random.nextInt(91) + 60; // Entre 60 et 150
+            PC = random.nextInt(101) + 100; // Entre 100 et 200
+            PV = random.nextInt(101) + 100; // Entre 100 et 200
+            attaque = random.nextInt(31) + 30;
+            defense = random.nextInt(31) + 30;
+            vitesse = random.nextInt(31) + 30; // Entre 30 et 60
+        } else if (evolution == 3){
+            PV = random.nextInt(151) + 200; // Entre 200 et 350
+            PC = random.nextInt(151) + 200; // Entre 200 et 350
+            attaque = random.nextInt(91) + 60;
+            defense = random.nextInt(91) + 60;
+            vitesse = random.nextInt(91) + 60; // Entre 60 et 150
+        }else{
+            PV = random.nextInt(9000) + 1000; // Entre 1000 et 10000
+            PC = random.nextInt(9000) + 1000; // Entre 1000 et 10000
+            attaque = random.nextInt(1900) + 1000;
+            defense = random.nextInt(1900) + 1000;
+            vitesse = random.nextInt(1900) + 1000; // Entre 1000 et 2000
         }
 
         List<Type> types = new ArrayList<>();
         types.add(pokemonInfo.getType()); // Définir le type à partir du Pokedex
 
-        return new Pokemon(nom, PV, PC, attaque, defense, vitesse, new ArrayList<>(), types);
+        return new Pokemon(nom, PV, PC, Math.round(attaque+(0.20*PC)), Math.round(defense+(0.20*PC)), Math.round(vitesse+(0.20*PC)), new ArrayList<>(), types);
     }
 
     private int determinerEvolution(String nom) {
@@ -181,14 +182,20 @@ public class Dresseur {
     
             // Générer des statistiques en fonction de l'évolution
             if (infoEvolue.getEvolutionStage() == 2) {
-                PC = PV = random.nextInt(101) + 100; // Entre 100 et 200
-                attaque = defense = vitesse = random.nextInt(31) + 30; // Entre 30 et 60
+                PC = random.nextInt(101) + 100; // Entre 100 et 200
+                PV = random.nextInt(101) + 100; // Entre 100 et 200
+                attaque = random.nextInt(31) + 30;
+                defense = random.nextInt(31) + 30;
+                vitesse = random.nextInt(31) + 30; // Entre 30 et 60
             } else {
-                PC = PV = random.nextInt(151) + 200; // Entre 200 et 350
-                attaque = defense = vitesse = random.nextInt(91) + 60; // Entre 60 et 150
+                PV = random.nextInt(151) + 200; // Entre 200 et 350
+                PC = random.nextInt(151) + 200; // Entre 200 et 350
+                attaque = random.nextInt(91) + 60;
+                defense = random.nextInt(91) + 60;
+                vitesse = random.nextInt(91) + 60; // Entre 60 et 150
             }
     
-            return new Pokemon(nomEvolue, PV, PC , attaque, defense, vitesse, new ArrayList<>(), List.of(infoEvolue.getType()), attaquesActuelles);
+            return new Pokemon(nomEvolue, PV, PC , Math.round(attaque+(0.20*PC)), Math.round(defense+(0.20*PC)), Math.round(vitesse+(0.20*PC)), new ArrayList<>(), List.of(infoEvolue.getType()), attaquesActuelles);
         }
     
         return null; // Retourner null si l'évolution n'est pas trouvée

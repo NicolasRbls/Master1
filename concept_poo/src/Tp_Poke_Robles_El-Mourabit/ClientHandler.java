@@ -1,7 +1,5 @@
 import java.io.*;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ClientHandler implements Runnable {
     private Socket clientSocket;
@@ -9,8 +7,9 @@ public class ClientHandler implements Runnable {
     private PrintWriter out;
     private BufferedReader in;
     private String nomDresseur;
-    private List<Pokemon> pokemons = new ArrayList<>();
     private String dernierMessageRecu; // Attribut pour stocker le dernier message
+
+    
 
 
     public ClientHandler(Socket socket, ServeurCombat serveur) {
@@ -24,15 +23,19 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    @Override
+     @Override
     public void run() {
         try {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
-                dernierMessageRecu = inputLine; // Mettre à jour le dernier message reçu
-                System.out.println("Données reçues du client: " + inputLine);
-                traiterMessage(inputLine);
-                // ... (Logique de traitement des messages)
+                if (nomDresseur == null) {
+                    nomDresseur = inputLine;
+                    System.out.println("Message reçu de " + nomDresseur + ": " + inputLine);
+                    serveur.notifierMessageRecu(this); // Notifie le serveur qu'un message a été reçu
+
+                    continue;
+                }
+                dernierMessageRecu = inputLine;
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,43 +44,16 @@ public class ClientHandler implements Runnable {
         }
     }
 
-
-    private void traiterMessage(String message) {
-        // Extraction du nom du Dresseur (si disponible)
-        if (nomDresseur == null) {
-            nomDresseur = message;
-            return;
-        }
-
-        // Traitement des informations de Pokémon
-        Pokemon pokemon = serveur.creerPokemon(message);
-        if (pokemon != null) {
-            pokemons.add(pokemon);
-        }
-    }
-
-    public Dresseur getDresseur() {
-        Dresseur dresseur = new Dresseur(nomDresseur);
-        for (Pokemon pokemon : pokemons) {
-            dresseur.ajouterPokemon(pokemon);
-        }
-        return dresseur;
+    // Cette méthode renvoie le nom du dresseur associé à ce client
+    public String getNomDresseur() {
+        return nomDresseur;
     }
 
     public void envoyerMessage(String message) {
+        System.out.println("Demande envoyée au client " + nomDresseur + ": " + message);
         out.println(message);
     }
 
-    // Méthode pour recevoir les informations du Pokémon envoyées par le client
-    public String recevoirInfosPokemon() {
-        try {
-            String infosPokemon = in.readLine();
-            return infosPokemon;
-        } catch (IOException e) {
-            System.out.println("Erreur lors de la réception des informations du Pokémon: " + e.getMessage());
-            return null;
-        }
-    }
 
     public String getDernierMessageRecu() {
         return dernierMessageRecu; // Retourner le dernier message reçu
@@ -92,4 +68,5 @@ public class ClientHandler implements Runnable {
             e.printStackTrace();
         }
     }
+
 }

@@ -12,6 +12,8 @@ public class ClientPokemon {
     private Scanner scanner; // Déclaration de la variable
     private Dresseur dresseur;
     private Pokedex pokedex;
+    private GestionCombat combat;
+
 
 
     public ClientPokemon(String adresse, int port, String nomDresseur) {
@@ -25,48 +27,29 @@ public class ClientPokemon {
             // Créer un dresseur avec le nom donné
             dresseur = new Dresseur(nomDresseur);            
             pokedex = new Pokedex();
+            combat = new GestionCombat(dresseur);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-    public void envoyerDemandeCombat(List<Pokemon> pokemons) {
-        for (Pokemon pokemon : pokemons) {
-            String infosCombat = convertirEnChaine(pokemon);
-            out.println(infosCombat);
-        }
-    }
-    
-    private String convertirEnChaine(Pokemon pokemon) {
-        StringBuilder sb = new StringBuilder();
-        
-        // Ajouter les détails du Pokémon
-        sb.append("nomPokemon:").append(pokemon.getNom()).append(",");
-        sb.append("PC:").append(pokemon.getPC()).append(",");
-        sb.append("PV:").append(pokemon.getPV()).append(",");
-        sb.append("attaque:").append(pokemon.getAttaque()).append(",");
-        sb.append("defense:").append(pokemon.getDefense()).append(",");
-        sb.append("vitesse:").append(pokemon.getVitesse()).append(",");
-        for (Type type : pokemon.getTypes()) {
-            sb.append(type).append(",");
-        }
-        sb.setLength(sb.length() - 1); // Supprimer la dernière virgule
-        
-        return sb.toString();
-    }
-    
-      
-
-    /*public void ecouterResultat() {
+    public ClientPokemon(String adresse, int port, Dresseur dresseur) {
         try {
-            System.out.println("En attente du résultat du combat...");
-            String reponse = in.readLine();
-            System.out.println("Résultat du combat reçu: " + reponse);
+            socket = new Socket(adresse, port);
+            out = new PrintWriter(socket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            scanner = new Scanner(System.in); // Initialisation de la variable
+            System.out.println("Connecté au serveur sur " + adresse + ":" + port);
+    
+            // Utiliser le dresseur fourni
+            this.dresseur = dresseur;            
+            pokedex = new Pokedex();
+            combat = new GestionCombat(dresseur);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }*/
+    }
+    
 
     public void ecouterResultat() {
         try {
@@ -80,14 +63,14 @@ public class ClientPokemon {
     }
 
     public void afficherMenu() {
-        while (true) {
+        boolean enCours = true; // Contrôle l'exécution de la boucle du menu
+        while (enCours) {
             System.out.println("Menu:");
             System.out.println("1. Chasser Pokémon");
             System.out.println("2. Voir mes Pokémon");
             System.out.println("3. Voir mes bonbons");
             System.out.println("4. Combat");
-            System.out.println("5. Obtenir des bonbons");
-            System.out.println("6. Quitter");
+            System.out.println("5. Sauvegarder et Quitter");
             System.out.print("Entrez votre choix : ");
             int choix = scanner.nextInt();
             scanner.nextLine(); // Consomme le retour à la ligne
@@ -103,14 +86,12 @@ public class ClientPokemon {
                     afficherBonbons();
                     break;
                 case 4:
-                    // Logique pour le combat
+                    Save.serialiserDresseur(dresseur);
+                    demanderCombat();
                     break;
                 case 5:
-                    dresseur.obtenirBonbonsAleatoires();
-                    break;
-                case 6:
-                    System.out.println("Déconnexion...");
-                    return;
+                    sauvegarderEtQuitter();
+                    enCours = false; // Met fin à la boucle du menu
                 default:
                     System.out.println("Choix invalide, veuillez réessayer.");
             }
@@ -118,8 +99,22 @@ public class ClientPokemon {
     }
 
     private void chasserPokemon() {
-        System.out.println("Vous partez à la chasse aux Pokémon...");
-        dresseur.chasserPokemon(); // Utilisation de la méthode chasserPokemon de la classe Dresseur
+        Pokemon pokemon = dresseur.genererPokemonAleatoire();
+        System.out.println("Vous avez rencontré un " + pokemon.getNom() + " !");
+
+        // Le joueur a la possibilité de capturer le Pokémon
+        System.out.println("Voulez-vous capturer ou combattre le Pokémon (Capture/Combat)");
+        String choix = scanner.nextLine();
+
+        if (choix.equalsIgnoreCase("Capture")) {
+            dresseur.ajouterPokemon(pokemon);
+        } else {
+            System.out.println("Le combat commence...");
+            String resultat = combat.demarrerCombat(pokemon);
+            if (resultat.equalsIgnoreCase("Le dresseur 1 a gagné !")) {
+                dresseur.obtenirBonbonsAleatoires();
+            }
+        }
     }
 
     private void afficherPokemons() {
@@ -158,7 +153,8 @@ public class ClientPokemon {
             System.out.printf("Gérer %s:\n", pokemon.getNom());
             System.out.println("1. Voir les statistiques");
             System.out.println("2. Tenter d'évoluer");
-            System.out.println("3. Retour");
+            System.out.println("3. Relâcher le Pokémon");
+            System.out.println("4. Retour");
             System.out.print("Entrez votre choix : ");
             int choix = scanner.nextInt();
             scanner.nextLine(); // Consomme le retour à la ligne
@@ -171,12 +167,20 @@ public class ClientPokemon {
                     tenterEvolution(pokemon);
                     break;
                 case 3:
+                    relacherPokemon(pokemon);
+                    return; // Retour au menu principal après avoir relâché le Pokémon
+                case 4:
                     return;
                 default:
                     System.out.println("Choix invalide, veuillez réessayer.");
             }
         }
     }
+    
+    private void relacherPokemon(Pokemon pokemon) {
+        dresseur.relacherPokemon(pokemon);
+    }
+    
     
     private void afficherStatistiquesPokemon(Pokemon pokemon) {
         System.out.println("Statistiques de " + pokemon.getNom() + ":");
@@ -186,23 +190,104 @@ public class ClientPokemon {
         System.out.println("Défense: " + pokemon.getDefense());
         System.out.println("Vitesse: " + pokemon.getVitesse());
         System.out.println("Types: " + pokemon.getTypes());
-        // Ajouter plus de détails si nécessaire
+    
+        // Afficher les attaques
+        System.out.println("Attaques:");
+        for (Attaque attaque : pokemon.getAttaques()) {
+            System.out.println("- " + attaque.getNom() + " (Dégâts: " + attaque.getPuissance() + ")");
+        }
+    
+        // Afficher l'évolution possible
+        String prochaineEvolution = dresseur.determinerProchaineEvolution(pokemon.getNom());
+        if (!"Pas d'évolution supplémentaire".equals(prochaineEvolution)) {
+            System.out.println("Prochaine évolution: " + prochaineEvolution);
+        } else {
+            System.out.println("Ce Pokémon n'a pas d'évolution supplémentaire.");
+        }
     }
+    
     
     private void tenterEvolution(Pokemon pokemon) {
         dresseur.evoluerPokemon(pokemon);
         // La logique d'évolution est gérée dans la méthode evoluerPokemon de la classe Dresseur
     }
-    
 
+
+    private void sauvegarderEtQuitter() {
+        Save.serialiserDresseur(dresseur);
+        try {
+            socket.close();
+            System.out.println("Déconnexion...");
+            System.exit(0);
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la déconnexion : " + e.getMessage());
+        }
+    }
+
+    private void ecouterInstructionsCombat() {
+        try {
+            String ligne;    
+            while ((ligne = in.readLine()) != null) {
+                System.out.println(ligne); // Afficher les messages du serveur    
+                if (ligne.contains("gagne le combat") || ligne.contains("Égalité")) {
+                    return; // Sortir de la méthode après le combat
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Erreur lors de la réception des instructions du combat: " + e.getMessage());
+        }
+    }
+    
+    private void demanderCombat() {
+        System.out.println("Envoi du nom du dresseur au serveur: " + dresseur.getNom());
+        out.println(dresseur.getNom()); // Envoie le nom du dresseur au serveur pour initier le combat
+        out.flush();
+        System.out.println("En attente d'un adversaire...");
+        ecouterInstructionsCombat();
+        afficherMenu(); // Retour au menu principal après la fin du combat
+    }
+    
+    
+        
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Entrez le nom du dresseur : ");
-        String nomDresseur = scanner.nextLine();
+        System.out.println("Bienvenue dans le jeu Pokémon !");
+        System.out.println("1. Nouvelle partie");
+        System.out.println("2. Charger une partie");
+        System.out.print("Choisissez une option : ");
+        int choix = scanner.nextInt();
+        scanner.nextLine(); // Consomme le retour à la ligne
 
-        ClientPokemon client = new ClientPokemon("127.0.0.1", 12345, nomDresseur);
-        client.afficherMenu();
+        String nomDresseur;
+        switch (choix) {
+            case 1: // Nouvelle partie
+                System.out.print("Entrez le nom du dresseur : ");
+                nomDresseur = scanner.nextLine();
+                ClientPokemon clientNouveau = new ClientPokemon("127.0.0.1", 12345, nomDresseur);
+                clientNouveau.afficherMenu();
+                break;
+            case 2: // Charger une partie
+                Dresseur dresseurCharge = null;
+                while (dresseurCharge == null) {
+                    System.out.print("Entrez le nom du dresseur pour charger la partie (ou 'annuler' pour revenir) : ");
+                    nomDresseur = scanner.nextLine();
+                    if (nomDresseur.equalsIgnoreCase("annuler")) {
+                        System.out.println("Chargement annulé.");
+                        return; // Retourne au menu principal
+                    }
+                    dresseurCharge = Save.deserialiserDresseur(nomDresseur);
+                    if (dresseurCharge == null) {
+                        System.out.println("Aucune sauvegarde trouvée pour " + nomDresseur + ", veuillez réessayer.");
+                    }
+                }
+                ClientPokemon clientCharge = new ClientPokemon("127.0.0.1", 12345, dresseurCharge);
+                clientCharge.afficherMenu();
+                break;            
+            default:
+                System.out.println("Choix invalide, veuillez réessayer.");
+                break;
+        }
     }
 }
 

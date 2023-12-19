@@ -3,10 +3,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.io.Serializable;
 
-public class Pokedex {
+
+public class Pokedex implements Serializable {
     private List<PokemonInfo> pokemons;
     private Map<String, List<String>> evolutions;
+    private static final long serialVersionUID = 1L; // Numéro de version pour la sérialisation
+
 
     public Pokedex() {
         pokemons = new ArrayList<>();
@@ -53,11 +57,11 @@ public class Pokedex {
         ajouterPokemon("Sabelette", Type.SOL, 1, new ArrayList<>(List.of("Sablaireau")));
         ajouterPokemon("Sablaireau", Type.SOL, 2, new ArrayList<>());
 
-        ajouterPokemon("Nidoran♀", Type.POISON, 1, new ArrayList<>(List.of("Nidorina")));
+        ajouterPokemon("Nidorand F", Type.POISON, 1, new ArrayList<>(List.of("Nidorina")));
         ajouterPokemon("Nidorina", Type.POISON, 2, new ArrayList<>(List.of("Nidoqueen")));
         ajouterPokemon("Nidoqueen", Type.POISON, 3, new ArrayList<>());
 
-        ajouterPokemon("Nidoran♂", Type.POISON, 1, new ArrayList<>(List.of("Nidorino")));
+        ajouterPokemon("Nidorand M", Type.POISON, 1, new ArrayList<>(List.of("Nidorino")));
         ajouterPokemon("Nidorino", Type.POISON, 2, new ArrayList<>(List.of("Nidoking")));
         ajouterPokemon("Nidoking", Type.POISON, 3, new ArrayList<>());
 
@@ -188,6 +192,11 @@ public class Pokedex {
         ajouterPokemon("Stari", Type.EAU, 1, new ArrayList<>(List.of("Staross")));
         ajouterPokemon("Staross", Type.EAU, 2, new ArrayList<>());
 
+        ajouterPokemon("Arceus", Type.NORMAL, 4, new ArrayList<>());
+        ajouterPokemon("Gyratina", Type.SPECTRE, 4, new ArrayList<>());
+
+
+
 
 
     }
@@ -256,10 +265,12 @@ public class Pokedex {
 
 
     // Classe interne pour stocker les informations de base des Pokémon
-    public static class PokemonInfo {
+    public static class PokemonInfo implements Serializable{
         private String nom;
         private Type type;
         private int evolutionStage;
+        private static final long serialVersionUID = 1L; // Numéro de version pour la sérialisation
+
 
         public PokemonInfo(String nom, Type type, int evolutionStage) {
             this.nom = nom;
