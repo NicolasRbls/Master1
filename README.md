@@ -6,5 +6,6 @@ Structure du Référentiel
 Le répertoire est organisé en sous-répertoires correspondant aux différentes matières et cours. Chaque sous-répertoire contient le code source, les fichiers de documentation, et les fichiers de données pertinents.
 
 <br><strong>[Pratique de programmation]</strong> : Remise a niveaux sur python et java beaucoups de projets pratique.</h2>
+<br><strong>[concept de programmation orientée objet]</strong> : Nombreux programmes java.</h2>
 
 N'hésitez pas à explorer les sous-répertoires pour découvrir les différents projets et exercices.
