@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crack le Code</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="game-container">
+  <h1>CRACK LE CODE</h1>
+  <div class="code-inputs">
+    <input type="text" id="input1" maxlength="1" pattern="[0-9]" placeholder="0-9">
+    <input type="text" id="input2" maxlength="1" pattern="[0-9]" placeholder="0-9">
+    <input type="text" id="input3" maxlength="1" pattern="[0-9]" placeholder="0-9">
+  </div>
+  <button onclick="checkCode()">DEBLOQUER</button>
+  <div id="result"></div>
+  <div class="clues">
+    <p>6 8 2 - Un des numéros est correct et bien placé</p>
+    <p>6 1 4 - Un des numéros est correct mais mal placé</p>
+    <p>2 0 6 - Deux numéros sont corrects mais mal placés</p>
+    <p>7 3 8 - Aucun numéro n'est correct</p>
+    <p>7 8 0 - Un des numéros est correct mais mal placé</p>
+  </div>
+</div>
+<script src="mini_code.js"></script>
+</body>
+</html>
