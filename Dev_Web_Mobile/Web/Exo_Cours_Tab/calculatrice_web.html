@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculatrice Épurée</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  .calculator {
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    width: 300px;
+  }
+  .calculator-display {
+    font-size: 1em;
+    text-align: right;
+    border: none;
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  .calculator-keys {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .calculator-key {
+    font-size: 1.5em;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #e0e0e0;
+    box-shadow: inset 0px -4px 0px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.2s ease-in-out;
+  }
+  .calculator-key:active {
+    background-color: #d0d0d0;
+  }
+</style>
+</head>
+<body>
+<div class="calculator">
+  <input type="text" class="calculator-display" disabled>
+  <div class="calculator-keys">
+    <button class="calculator-key" onclick="pressKey('1')">1</button>
+    <button class="calculator-key" onclick="pressKey('2')">2</button>
+    <button class="calculator-key" onclick="pressKey('3')">3</button>
+    <button class="calculator-key" onclick="pressOperation('+')">+</button>
+    <button class="calculator-key" onclick="pressKey('4')">4</button>
+    <button class="calculator-key" onclick="pressKey('5')">5</button>
+    <button class="calculator-key" onclick="pressKey('6')">6</button>
+    <button class="calculator-key" onclick="pressOperation('-')">-</button>
+    <button class="calculator-key" onclick="pressKey('7')">7</button>
+    <button class="calculator-key" onclick="pressKey('8')">8</button>
+    <button class="calculator-key" onclick="pressKey('9')">9</button>
+    <button class="calculator-key" onclick="pressOperation('*')">*</button>
+    <button class="calculator-key" onclick="pressKey('0')">0</button>
+    <button class="calculator-key" onclick="calculate()">=</button>
+    <button class="calculator-key" onclick="clearDisplay()">C</button>
+  </div>
+</div>
+
+<script>
+  let display = document.querySelector('.calculator-display');
+  let calculation = '';
+
+  function pressKey(key) {
+    calculation += key;
+    display.value = calculation;
+  }
+
+  function pressOperation(op) {
+    calculation += ' ' + op + ' ';
+    display.value = calculation;
+  }
+
+  function calculate() {
+    try {
+      let result = eval(calculation);
+      display.value = calculation + ' = ' + result;
+      calculation = result.toString();
+    } catch (e) {
+      display.value = 'Error';
+      calculation = '';
+    }
+  }
+
+  function clearDisplay() {
+    calculation = '';
+    display.value = '';
+  }
+</script>
+</body>
+</html>
