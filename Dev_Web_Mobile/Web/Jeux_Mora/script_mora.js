@@ -71,14 +71,11 @@ function resetGame() {
     document.getElementById('player-guess').value = '';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-document.getElementById('player-pseudo').addEventListener('blur', enableGame);
-startGame();
-});
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('start-button').addEventListener('click', startGame);
-    updatePseudo();
+    document.getElementById('start-button').addEventListener('click', enableGame);
+    startGame();
 });
 
 
