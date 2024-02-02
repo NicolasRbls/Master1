@@ -33,15 +33,30 @@ function nouvellePhrase() {
     document.getElementById("phrase").textContent = phrases[phraseIndex];
 }
 
-
 function verifierEntree() {
     let inputVal = document.getElementById("inputUser").value;
     let phraseActuelle = document.getElementById("phrase").textContent;
+    let resultat = "";
+
     if (!enCours) {
         tempsDebut = new Date();
         enCours = true;
-        timerInterval = setInterval(mettreAJourChrono, 100); // Mettre à jour toutes les 100 millisecondes
+        timerInterval = setInterval(mettreAJourChrono, 10); // Mettre à jour toutes les 10 millisecondes
     }
+
+    for (let i = 0; i < phraseActuelle.length; i++) {
+        if (i < inputVal.length) {
+            if (inputVal[i] === phraseActuelle[i]) {
+                resultat += '<span class="correct">' + phraseActuelle[i] + '</span>';
+            } else {
+                resultat += '<span class="incorrect">' + phraseActuelle[i] + '</span>';
+            }
+        } else {
+            resultat += phraseActuelle[i];
+        }
+    }
+
+    document.getElementById("phrase").innerHTML = resultat; // Mettre à jour la phrase affichée
 
     if (inputVal === phraseActuelle) {
         clearInterval(timerInterval); // Arrêter le chronomètre
@@ -60,17 +75,20 @@ function verifierEntree() {
         } else {
             scoreFinal = scores.reduce((a, b) => a + b, 0); // Calculer le score final
             alert(`Parties terminées ! Score final : ${scoreFinal}`);
+            afficherPopupImage("moy_text_speed.jpg");
             scores = []; // Réinitialiser la liste des scores
             document.getElementById("inputUser").value = ""; // Réinitialiser le champ de saisie
             document.getElementById("temps").textContent = "0.00"; // Réinitialiser le temps
-            document.getElementById("score").textContent ="Score: 0"; // Réinitialiser le score
+            document.getElementById("score").textContent = "Score: 0"; // Réinitialiser le score
             enCours = false;
             partiesJouees = 0; // Réinitialiser le nombre de parties jouées
             scoreFinal = 0; // Réinitialiser le score final
             document.getElementById("inputUser").disabled = false; // Activer le champ de saisie
+            nouvellePartie();
         }
     }
 }
+
 
 function mettreAJourChrono() {
     if (enCours) {
@@ -86,3 +104,18 @@ function nouvellePartie() {
     enCours = false;
     document.getElementById("inputUser").disabled = false; // Activer le champ de saisie
 }
+
+function afficherPopupImage(urlImage) {
+    Swal.fire({
+        imageUrl: urlImage,
+        imageAlt: "Image",
+        showCloseButton: true, // Affiche un bouton de fermeture
+        customClass: {
+            image: 'image-popup' // Ajoute une classe CSS personnalisée à l'image
+        }
+    });
+}
+
+
+
+
