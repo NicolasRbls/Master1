@@ -1,10 +1,5 @@
 // script.js
-let phrases = [
-    "La vie est belle.",
-    "Le soleil brille.",
-    "Les oiseaux chantent.",
-    "La programmation est amusante."
-];
+let phrases;
 let tempsDebut;
 let timerInterval;
 let enCours = false;
@@ -13,8 +8,24 @@ let scores = [];
 let scoreFinal = 0; // Ajout de la variable pour le score final
 
 window.onload = () => {
-    nouvellePartie();
-    document.getElementById("inputUser").addEventListener("input", verifierEntree);
+    chargerPhrases() // Charger les phrases à partir du fichier
+    .then(() => {
+        nouvellePartie();
+        document.getElementById("inputUser").addEventListener("input", verifierEntree);
+    })
+    .catch((error) => {
+        console.error('Erreur lors du chargement des phrases :', error);
+    });
+}
+
+async function chargerPhrases() {
+    try {
+        const response = await fetch('phrase.txt');
+        const data = await response.text();
+        phrases = data.split('\n').map(phrase => phrase.trim());
+    } catch (error) {
+        throw error; // Lancer l'erreur pour la capturer dans le gestionnaire catch
+    }
 }
 
 function nouvellePhrase() {
@@ -49,12 +60,12 @@ function verifierEntree() {
         } else {
             scoreFinal = scores.reduce((a, b) => a + b, 0); // Calculer le score final
             alert(`Parties terminées ! Score final : ${scoreFinal}`);
+            scores = []; // Réinitialiser la liste des scores
             document.getElementById("inputUser").value = ""; // Réinitialiser le champ de saisie
             document.getElementById("temps").textContent = "0.00"; // Réinitialiser le temps
-            document.getElementById("score").textContent = ""; // Réinitialiser le score
+            document.getElementById("score").textContent ="Score: 0"; // Réinitialiser le score
             enCours = false;
             partiesJouees = 0; // Réinitialiser le nombre de parties jouées
-            scores = []; // Réinitialiser la liste des scores
             scoreFinal = 0; // Réinitialiser le score final
             document.getElementById("inputUser").disabled = false; // Activer le champ de saisie
         }
