@@ -1,0 +1,3 @@
+1) Il ya a un probléme avec la fonction "fonctionX()" car une fois qu'elle se termine la mémoire est libérée or elle est appellé dans le main alors que la memoire du tableau n'est plus valide.
+
+2)La fonction fun() retourne un pointeur vers la variable locale x. Une fois que la fonction fun() se termine, la variable x n'est plus valide et l'accès à son adresse via le pointeur p dans main() est incorrect et peut entraîner un comportement indéterminé.
