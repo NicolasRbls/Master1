@@ -1,0 +1,11 @@
+1) La moyenne des quatre notes est supérieure à 10 : (Nlv + Nf + Nm + Np) / 4 > 10
+
+2) Les notes de mathématiques et de français sont supérieures à la moyenne des quatre notes : Nm > (Nlv + Nf + Nm + Np) / 4 ET Nf > (Nlv + Nf + Nm + Np) / 4
+
+3) Il y a au moins une note supérieure à 10 : Nlv > 10 OU Nf > 10 OU Nm > 10 OU Np > 10
+
+4) Toutes les notes sont supérieures à 10 : Nlv > 10 ET Nf > 10 ET Nm > 10 ET Np > 10
+
+5) La moyenne (10) est obtenue pour l'un des deux types (littéraire et scientifique) : ((Nlv + Nf) / 2 = 10) OU ((Nm + Np) / 2 = 10)
+
+6) La moyenne des quatre notes est supérieure ou égale à 10 et la moyenne (10) est obtenue pour au plus l'un des deux types : ((Nlv + Nf + Nm + Np) / 4 >= 10) ET (Nlv = 10 OU Nf = 10 OU Nm = 10 OU Np = 10)
