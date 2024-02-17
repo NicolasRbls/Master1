@@ -1,0 +1,70 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    width: 400px; /* Largeur plus grande */
+    background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%); /* Fond en dégradé */
+    color: #ffffff; /* Texte en blanc pour contraste */
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.1); /* Légère transparence */
+    border-radius: 5px; /* Bordures arrondies */
+    word-break: break-all;
+}
+
+li:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Changement au survol */
+}
+
+/* Style pour rendre les URLs plus lisibles */
+li a {
+    color: #ffffff; /* Même couleur de texte que le body pour uniformité */
+    text-decoration: none; /* Pas de soulignement */
+}
+
+li a:hover {
+    text-decoration: underline; /* Soulignement au survol */
+}
+
+#clearData {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #ff4b5c; /* Couleur de fond rouge pour l'action de suppression */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s ease;
+}
+
+#clearData:hover {
+    background-color: #ff6b7d; /* Assombrir légèrement le bouton au survol */
+}
+
+#clearData:focus {
+    outline: none; /* Évite l'affichage d'un contour lors de la sélection du bouton */
+}
+
+/* Facultatif: ajoutez une petite ombre pour un effet en relief */
+#clearData {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
