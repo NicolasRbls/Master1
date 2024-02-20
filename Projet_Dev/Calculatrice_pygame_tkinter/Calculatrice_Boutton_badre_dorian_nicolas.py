@@ -25,7 +25,7 @@ class Calculator:
         clear_btn_color = '#DDBF3B'
         number_btn_color = '#3B4A53'
 
-        # Style des boutons, plus proche du style Apple (Notez que 'bg' est retiré ici)
+        # Style des boutons
         btn_params = {
             'font': ("Helvetica", 16),
             'bd': 0,
@@ -40,7 +40,6 @@ class Calculator:
 
         # Boutons
         buttons = [
-            # Ajustez les numéros de ligne pour commencer à partir de row=2 (ou plus si nécessaire)
             ('7', 2, 0, number_btn_color), ('8', 2, 1, number_btn_color), ('9', 2, 2, number_btn_color),
             ('/', 2, 3, operator_btn_color),
             ('4', 3, 0, number_btn_color), ('5', 3, 1, number_btn_color), ('6', 3, 2, number_btn_color),
@@ -53,17 +52,16 @@ class Calculator:
         ]
 
         for button in buttons:
-            text, row, col, bg_color = button[:4]  # Cela extrait toujours les 4 premiers éléments
+            text, row, col, bg_color = button[:4]
             col_span = button[4] if len(
-                button) == 5 else 1  # Utilise la 5e valeur si elle existe, sinon définit col_span à 1
+                button) == 5 else 1
 
             button = tk.Button(root, text=text, command=lambda t=text: self.on_button_click(t), bg=bg_color,
                                **btn_params)
             button.grid(row=row, column=col, columnspan=col_span, sticky="nsew", padx=10, pady=10)
             root.grid_columnconfigure(col, weight=1)
 
-        # Assurez-vous de mettre à jour la configuration des lignes pour que les boutons s'étendent de manière égale
-        for i in range(8):  # Ajustez le nombre total de lignes si nécessaire
+        for i in range(8):
             root.grid_rowconfigure(i, weight=1)
 
     def on_button_click(self, char):
