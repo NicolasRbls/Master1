@@ -1,3 +1,33 @@
 1) Il ya a un probléme avec la fonction "fonctionX()" car une fois qu'elle se termine la mémoire est libérée or elle est appellé dans le main alors que la memoire du tableau n'est plus valide.
 
 2)La fonction fun() retourne un pointeur vers la variable locale x. Une fois que la fonction fun() se termine, la variable x n'est plus valide et l'accès à son adresse via le pointeur p dans main() est incorrect et peut entraîner un comportement indéterminé.
+Utilisation d'un pointeur après la sortie de portée:
+
+3)Ici, ptr est assigné à l'adresse de ch, une variable automatique dont la portée se limite au bloc interne. Après la sortie de ce bloc, ptr pointe vers une adresse mémoire qui n'est plus valide.
+Déréférencement d'un pointeur non initialisé:
+
+4)piData est utilisé sans avoir été initialisé. Cela entraîne un comportement indéfini car il pointe vers une zone mémoire aléatoire.
+Libération double d'un pointeur:
+
+5)Le pointeur piData est libéré deux fois de suite, ce qui peut conduire à des erreurs d'exécution ou des comportements indéfinis.
+Mauvaise utilisation de sizeof sur un pointeur:
+
+6)L'utilisation de sizeof(piBuffer) ne retourne pas la taille du tableau alloué, mais la taille du pointeur lui-même, typiquement 4 ou 8 octets selon l'architecture. Cela ne reflète pas la taille réelle de la mémoire allouée.
+Gestion correcte de la mémoire:
+
+7)Cet extrait montre une allocation, initialisation, utilisation et libération correctes de la mémoire. Aucun problème ici.
+Libération de mémoire suivie d'une utilisation:
+
+8)Ici, la mémoire pointée par piData1 (et piData2) est libérée, puis piData2 est utilisé pour modifier la mémoire déjà libérée. Cela peut conduire à des erreurs d'exécution.
+Fuite de mémoire:
+
+9)Le pointeur pBuffer est alloué de la mémoire mais n'est jamais libéré avant la fin du programme, ce qui entraîne une fuite de mémoire.
+Utilisation d'un pointeur après libération:
+
+10)La mémoire pointée par piData est libérée, puis le code tente de modifier la mémoire via ce pointeur libéré, ce qui est incorrect.
+Libération de mémoire non allouée dynamiquement:
+
+11)Ici, piData pointe vers une variable automatique, et free(piData) est appelé. C'est incorrect car free ne doit être utilisé que sur des pointeurs retournés par malloc, calloc, ou realloc.
+Gestion correcte de la mémoire dans une fonction:
+
+12)Cette fonction alloue de la mémoire, vérifie si l'allocation a réussi, effectue des opérations, puis retourne le pointeur vers la mémoire allouée. Il n'y a pas de libération de mémoire dans la fonction, ce qui est correct si le code appelant prend la responsabilité de libérer cette mémoire.
