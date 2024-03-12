@@ -1,0 +1,5 @@
+1) Gestion des joueurs : La classe Jeu gère la liste des joueurs (lesJoueurs), ce qui implique une responsabilité de gestion de données utilisateur.
+
+2) Logique de jeu : Elle contient la logique de jeu (lancer des dés, jouer un tour, exécuter une bataille), ce qui constitue une responsabilité distincte liée à la mécanique du jeu.
+
+3) Affichage : Elle gère également l'affichage des résultats (impressions dans la console), ce qui représente une autre responsabilité distincte, celle de l'interface utilisateur.

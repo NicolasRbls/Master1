@@ -1,0 +1,7 @@
+1) La classe Calculator ne respecte pas l'OCP car elle nécessite une modification chaque fois qu'une nouvelle opération doit être ajoutée. 
+La méthode calculate de cette classe vérifie explicitement le type d'opération (avec instanceof) et effectue une action différente en fonction du type.
+
+2)Pour respecter l'OCP, nous pouvons modifier la conception pour éliminer la nécessité de modifier la classe Calculator chaque fois qu'une nouvelle opération est ajoutée. 
+Une solution est d'utiliser le polymorphisme. Nous pouvons faire en sorte que chaque classe d'opération (Addition, Subtraction, etc.) implémente une méthode performOperation ou similaire dans l'interface CalculatorOperation. 
+Ensuite, la classe Calculator peut simplement appeler cette méthode sans se soucier du type d'opération
+
