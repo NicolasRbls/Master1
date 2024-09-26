@@ -1,0 +1,103 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #6a11cb, #2575fc); /* Dégradé violet à bleu */
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Title styling */
+.page-title {
+    color: white;
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Container styling */
+.container {
+    background-color: rgba(255, 255, 255, 0.9); /* Boîte légèrement transparente */
+    padding: 2em;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+h2 {
+    color: #333;
+    font-size: 1.8em;
+    margin-bottom: 1em;
+}
+
+p {
+    font-size: 1.1em;
+    color: #000000;
+    margin-bottom: 2em;
+}
+
+/* Form inputs */
+input[type="text"], 
+input[type="password"] {
+    width: 100%;
+    padding: 1em;
+    margin: 0.5em 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+/* Buttons */
+button, a.button {
+    display: block;
+    width: 100%;
+    padding: 1em;
+    border-radius: 10px;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 1em;
+    background-color: #2575fc;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+button:hover, a.button:hover {
+    background-color: #1e63e0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 1em;
+    color: red;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        padding: 1.5em;
+        width: 90%;
+    }
+
+    h2 {
+        font-size: 1.5em;
+    }
+
+    input[type="text"], 
+    input[type="password"] {
+        padding: 0.8em;
+    }
+
+    button, a.button {
+        padding: 0.8em;
+    }
+}
