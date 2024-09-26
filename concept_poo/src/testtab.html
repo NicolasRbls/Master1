@@ -1,0 +1,191 @@
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+        height: 100vh;  /* Assure que body prend toute la hauteur de la fenêtre */
+        display: flex;
+        flex-direction: column; /* Empile les éléments verticalement */
+        align-items: center; /* Centre horizontalement le contenu */
+        justify-content: center; /* Centre verticalement le contenu */
+    }
+
+    .table-container {
+        width: 80%;  /* Ajustez selon la largeur désirée pour le tableau */
+        display: flex;  /* Utilise Flexbox pour centrer le tableau */
+        justify-content: center;  /* Centre horizontalement */
+        align-items: center;  /* Centre verticalement */
+    }
+
+    table {
+        width: 70%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        transition: box-shadow 0.3s;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    table:hover {
+        box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+    }
+    th, td {
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        text-align: left;
+        transition: background-color 0.3s, transform 0.3s;
+        border-radius: 4px;
+    }
+    th {
+        background-color: gray;
+        color: #ffffff;
+    }
+    td {
+        background-color: #ffffff;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    /* Préparation pour l'animation de déroulement */
+    tr:not(.title) {
+        display: none;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out, visibility 0.3s;
+        padding: 0 15px; /* Ajustez selon votre design */
+    }
+
+    /* Style pour les lignes détaillées visibles */
+    tr.detail-visible {
+        max-height: 50px; /* Adaptez selon le contenu de votre ligne */
+        padding: 12px 15px; /* Restaure le padding original */
+        visibility: visible;
+    }
+
+    /* Effet de transition pour le déroulement */
+    tr {
+        transition: all 0.3s ease;
+    }
+
+    tr:hover td {
+        background-color: #f9f9f9;
+        transform: scale(1.02);
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .orange td[colspan="2"] { background-color: #FFA500; color: black; } /* Couleur de fond orange avec texte blanc */
+    .green td[colspan="2"] { background-color: #98bb7e; color: black; } /* Couleur de fond vert avec texte blanc */
+    .yellow td[colspan="2"] { background-color: #FFD700; color: black; } /* Couleur de fond jaune avec texte noir pour le contraste */
+    .blue td[colspan="2"] { background-color: #87CEEB; color: black; } /* Couleur de fond bleu avec texte blanc */
+</style>
+
+    
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var titles = document.querySelectorAll('.title');
+    
+        titles.forEach(function(title) {
+            title.addEventListener('click', function() {
+                let next = this.nextElementSibling;
+                let isOpen = this.classList.contains('open'); 
+    
+                // Fermer tous les détails ouverts rapidement
+                var allTitles = document.querySelectorAll('.title.open');
+                allTitles.forEach(function(otherTitle) {
+                    if (otherTitle !== this) {
+                        let detail = otherTitle.nextElementSibling;
+                        while (detail && !detail.classList.contains('title')) {
+                            detail.style.display = 'none';
+                            detail = detail.nextElementSibling;
+                        }
+                        otherTitle.classList.remove('open');
+                    }
+                });
+    
+                if (!isOpen) {
+                    this.classList.add('open');
+                    let delay = 0; // Délai initial pour le déroulement des lignes
+                    while (next && !next.classList.contains('title')) {
+                        setTimeout((function(row) {
+                            return function() {
+                                row.style.display = 'table-row';
+                            };
+                        })(next), delay);
+                        delay += 100; // Augmente le délai pour que chaque ligne apparaisse après la précédente
+                        next = next.nextElementSibling;
+                    }
+                } else {
+                    while (next && !next.classList.contains('title')) {
+                        next.style.display = 'none';
+                        next = next.nextElementSibling;
+                    }
+                    this.classList.remove('open');
+                }
+            });
+        });
+    });
+    </script>
+        
+    
+
+</head>
+<body>
+    <h2>Parcours touristiques dynamiques (cliquez sur les parcours)</h2>
+    <div class="table-container">
+    <table>
+    <thead>
+        <tr>
+            <th>Type de Parcours</th>
+            <th>Lieu</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="blue title"><td colspan="2">BLEU (demi-journée)</td></tr>
+        <tr><td></td><td>Speloncato - Église Saint Michel</td></tr>
+        <tr><td></td><td>Ville di Paraso - Église Saint Simon</td></tr>
+        <tr><td></td><td>Belgodère - Église Saint Thomas</td></tr>
+        <tr><td></td><td>Palasca - Église de l'Assomption</td></tr>
+        <tr><td></td><td>Novella - Chapelle Saint Michel</td></tr>
+        <tr class="orange title"><td colspan="2">ORANGE (journée) avec randonnée</td></tr>
+        <tr><td></td><td>Monte Sant'Anghjulu (par Corbara)</td></tr>
+        <tr><td></td><td>Corbara Confrérie Saint Antoine Abbé</td></tr>
+        <tr><td></td><td>Algajola-Chapelle Saint Michel (dite des marins)</td></tr>
+        <tr><td></td><td>Algajola - Église Saint Georges</td></tr>
+        <tr><td></td><td>Aregno - Chapelle Saint Michel (lieu-dit E Torre)</td></tr>
+        <tr><td></td><td>Aregno - Chapelle de la Trinité</td></tr>
+        <tr><td></td><td>Muro - Eglise de l'Assomption</td></tr>
+        <tr><td></td><td>Speloncato - Église Saint Michel</td></tr>
+        <tr><td></td><td>Barrage de Codole - Vallée du Regino</td></tr>
+        <tr class="green title"><td colspan="2">VERT (journée) avec randonnée</td></tr>
+        <tr><td></td><td>Monte Sant'Anghjulu (par Occiglioni)</td></tr>
+        <tr><td></td><td>Barrage de Codole - Vallée du Regino</td></tr>
+        <tr><td></td><td>Speloncato - Église Saint Michel</td></tr>
+        <tr><td></td><td>Ville di Paraso - Église Saint Simon</td></tr>
+        <tr><td></td><td>Belgodère - Église Saint Thomas</td></tr>
+        <tr><td></td><td>Palasca - Église de l'Assomption</td></tr>
+        <tr><td></td><td>Novella - Chapelle Saint Michel</td></tr>
+        <tr><td></td><td>Plage de l'Ostriconi</td></tr>
+        <tr class="yellow title"><td colspan="2">JAUNE (deux jours) avec randonnée</td></tr>
+        <tr><td></td><td>Monte Sant'Anghjulu (par Corbara)</td></tr>
+        <tr><td></td><td>Corbara Confrérie Saint Antoine Abbé</td></tr>
+        <tr><td></td><td>Algajola-Chapelle Saint Michel (dite des marins)</td></tr>
+        <tr><td></td><td>Algajola - Église Saint Georges</td></tr>
+        <tr><td></td><td>Aregno - Chapelle Saint Michel (lieu-dit E Torre)</td></tr>
+        <tr><td></td><td>Aregno - Chapelle de la Trinité</td></tr>
+        <tr><td></td><td>Muro - Eglise de l'Assomption</td></tr>
+        <tr><td></td><td>Barrage de Codole - Vallée du Regino</td></tr>
+        
+        <tr><td>Deuxième jour </td><td>--------------------</td></tr>
+
+        <tr><td></td><td>Speloncato - Église Saint Michel</td></tr>
+        <tr><td></td><td>Ville di Paraso - Eglise Saint Simon</td></tr>
+        <tr><td></td><td>Belgodère - Eglise Saint Thomas</td></tr>
+        <tr><td></td><td>Palasca - Eglise de l'Assomption</td></tr>
+        <tr><td></td><td>Novella - Chapelle Saint Michel</td></tr>
+        <tr><td></td><td>Plage de l'Ostriconi</td></tr>
+
+
+    </tbody>
+</table>
+</div>
+</body>
+</html>
