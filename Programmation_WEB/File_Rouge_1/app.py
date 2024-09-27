@@ -52,17 +52,74 @@ def home():
     return redirect(url_for('login'))
 
 
-# Ce code définit une route pour la déconnexion d'un utilisateur dans une application Flask. 
-# Lorsqu'un utilisateur se déconnecte, les informations de session sont supprimées et un message de confirmation est affiché. 
-# Enfin, l'utilisateur est redirigé vers la page de connexion.
-
+#route pour la déconnexion d'un utilisateur 
 @app.route('/logout')
 def logout():
-    session.pop('loggedin', None)
-    session.pop('user_id', None)
-    session.pop('username', None)
+    # Supprimer les informations de session pour l'utilisateur
+    session.pop('loggedin', None)  # Retirer l'état de connexion
+    session.pop('user_id', None)    # Retirer l'ID de l'utilisateur
+    session.pop('username', None)    # Retirer le nom d'utilisateur
+    
+    # Afficher un message de confirmation indiquant que l'utilisateur est déconnecté
     flash('Vous êtes déconnecté')
+    
+    # Rediriger l'utilisateur vers la page de connexion
     return redirect(url_for('login'))
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        # Récupérer les informations fournies par l'utilisateur via le formulaire
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
+        
+        # Vérifier si l'utilisateur existe déjà dans la base de données
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM user WHERE user_login = %s', (username,))
+        account = cursor.fetchone()
+
+        # Vérifier si l'adresse email existe déjà
+        cursor.execute('SELECT * FROM user WHERE user_mail = %s', (email,))
+        email_account = cursor.fetchone()
+
+        if account:
+            # Si l'utilisateur existe déjà, afficher un message d'erreur
+            flash('Cet utilisateur existe déjà !')
+        elif email_account:
+            # Si l'email est déjà utilisé, afficher un message d'erreur
+            flash('Cette adresse email est déjà utilisée !')
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email):
+            # Vérifier si l'adresse email est valide
+            flash('Adresse email invalide !')
+        elif not username or not password or not email:
+            # Vérifier si tous les champs sont remplis
+            flash('Veuillez remplir tous les champs !')
+        else:
+            # Obtenir le dernier compte_id pour l'utilisateur
+            cursor.execute('SELECT MAX(user_compte_id) as max_compte_id FROM user')
+            result = cursor.fetchone()
+            last_compte_id = result['max_compte_id']
+            
+            # Incrémenter le compte_id de 1 pour le nouvel utilisateur
+            if last_compte_id is not None:
+                new_compte_id = last_compte_id + 1
+            else:
+                new_compte_id = 1  # Si c'est le premier enregistrement dans la base de données
+
+            # Hachage du mot de passe pour la sécurité
+            hashed_password = generate_password_hash(password)
+            # Insérer le nouvel utilisateur dans la base de données
+            cursor.execute('INSERT INTO user (user_login, user_password, user_compte_id, user_mail) VALUES (%s, %s, %s, %s)', (username, hashed_password, new_compte_id, email))
+            mysql.connection.commit()  # Valider la transaction dans la base de données
+            # Afficher un message de succès après l'inscription
+            flash('Inscription réussie, vous pouvez maintenant vous connecter !')
+            return redirect(url_for('login'))  # Rediriger vers la page de connexion
+    
+    # Rendre le template d'inscription si la méthode est GET
+    return render_template('register.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

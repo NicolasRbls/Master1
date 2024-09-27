@@ -44,7 +44,8 @@ p {
 
 /* Form inputs */
 input[type="text"], 
-input[type="password"] {
+input[type="password"],
+input[type="email"] {
     width: 100%;
     padding: 1em;
     margin: 0.5em 0;
@@ -93,7 +94,8 @@ ul {
     }
 
     input[type="text"], 
-    input[type="password"] {
+    input[type="password"],
+    input[type="email"] {
         padding: 0.8em;
     }
 
@@ -101,3 +103,19 @@ ul {
         padding: 0.8em;
     }
 }
+
+/*pour l'inscription */
+.container p {
+    margin-top: 1em;
+    font-size: 0.9em;
+    color: #555;
+}
+.container a {
+    color: #2575fc;
+    text-decoration: none;
+}
+
+.container a:hover {
+    text-decoration: underline;
+}
+
