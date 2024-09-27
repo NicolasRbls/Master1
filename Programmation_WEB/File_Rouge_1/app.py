@@ -52,7 +52,10 @@ def home():
     return redirect(url_for('login'))
 
 
-# Route pour se déconnecter
+# Ce code définit une route pour la déconnexion d'un utilisateur dans une application Flask. 
+# Lorsqu'un utilisateur se déconnecte, les informations de session sont supprimées et un message de confirmation est affiché. 
+# Enfin, l'utilisateur est redirigé vers la page de connexion.
+
 @app.route('/logout')
 def logout():
     session.pop('loggedin', None)
