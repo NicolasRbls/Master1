@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion d'inventaire</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Gestion d'inventaire</h1>
+
+    <h2>Inventaire actuel</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Type</th>
+                <th>Quantité</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item_id, item in inventory.items() %}
+            <tr>
+                <td>{{ item_id }}</td>
+                <td>{{ item.type }}</td>
+                <td>{{ item.quantity }}</td>
+                <td class="action-buttons">
+                    <!-- Conteneur Flexbox pour les boutons -->
+                    <div class="button-group">
+                        <!-- Formulaire pour mettre à jour la quantité -->
+                        <form action="/inventory/{{ item_id }}" method="POST">
+                            <input type="hidden" name="_method" value="PUT">
+                            <input type="number" name="quantity" value="{{ item.quantity }}" min="0" required>
+                            <button type="submit">Mettre à jour</button>
+                        </form>
+                        <!-- Formulaire pour supprimer l'objet -->
+                        <form action="/inventory/{{ item_id }}" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="delete">Supprimer</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Ajouter un nouvel objet</h2>
+    <form action="/inventory" method="POST" class="add-item">
+        <label for="type">Type:</label>
+        <input type="text" name="type" required>
+        <label for="quantity">Quantité:</label>
+        <input type="number" name="quantity" min="0" required>
+        <button type="submit">Ajouter</button>
+    </form>
+</body>
+</html>
