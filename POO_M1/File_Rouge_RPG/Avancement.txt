@@ -1,0 +1,21 @@
+1. Amélioration du Code RPG :
+Revoir et adapter les classes existantes (Avatar, Hero, Mobs, etc.).
+Gestion des statistiques des personnages, du sac, des équipements, des combats, et des systèmes de récompenses.
+Préparer la gestion des trois modes de jeu : quête, versus, et plateau.
+
+2. Mode Quête :
+Mettre en place des combats automatisés entre le joueur et des ennemis IA.
+Ajout d’une logique de progression avec plusieurs quêtes, niveaux, et un système de récompense dynamique.
+
+3. Mode Versus :
+Implémentation d'un mode joueur contre joueur, avec des règles équilibrées.
+Gestion des actions simultanées ou à tour de rôle pour les combats.
+
+4. Mode Plateau :
+Gestion des déplacements sur un plateau de jeu, avec 50 cases et des obstacles.
+Gestion des interactions avec les cases : gains, pénalités, et interaction avec d'autres personnages.
+Ajout des mécanismes pour taurens et humains avec leurs caractéristiques spécifiques de déplacement.
+
+5. Intégration Backend :
+Intégrer toute la logique dans une API Python avec Flask ou Django.
+Gérer les sessions et les sauvegardes de parties côté serveur.
