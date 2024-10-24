@@ -53,9 +53,9 @@ def get_state(snake_list, food):
 # Fonction de récompense
 def reward_function(game_over, snake_ate_food, head, food):
     if game_over:
-        return -10  # Punition pour la mort
+        return -40  # Punition pour la mort
     elif snake_ate_food:
-        return 10  # Récompense pour avoir mangé
+        return 5  # Récompense pour avoir mangé
     else:
         # Récompense ou pénalité en fonction de la distance à la nourriture
         distance_to_food = abs(head[0] - food[0]) + abs(head[1] - food[1])
