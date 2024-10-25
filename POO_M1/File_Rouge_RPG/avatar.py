@@ -23,8 +23,25 @@ class Avatar:
         self._statistics = {"fight": 0, "win": 0, "maxDamage": 0}
 
     def sumStat(self):
+        """Sommation des statistiques de la race, de la classe et des équipements dans le sac"""
+        # Initialiser les stats de base pour éviter une accumulation incorrecte lors de multiples appels
         for key in self._stat.__dict__.keys():
-            self._stat.__dict__[key] += self._race._stat.__dict__.get(key, 0) + self._classe._stat.__dict__.get(key, 0)
+            self._stat.__dict__[key] = 0
+
+        # Ajouter les statistiques de la race
+        for key in self._stat.__dict__.keys():
+            self._stat.__dict__[key] += self._race._stat.__dict__.get(key, 0)
+
+        # Ajouter les statistiques de la classe
+        for key in self._stat.__dict__.keys():
+            self._stat.__dict__[key] += self._classe._stat.__dict__.get(key, 0)
+
+        # Ajouter les statistiques des équipements dans le sac
+        for item in self._bag._lItems:
+            if isinstance(item, Equipment):  # Vérifier que l'objet est un équipement
+                for key in self._stat.__dict__.keys():
+                    self._stat.__dict__[key] += item._stat.__dict__.get(key, 0)
+
 
     def initiative(self):
         min_val = self._stat.speed

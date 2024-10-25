@@ -10,7 +10,6 @@ class Quest:
     def run(self, hero):
         """Lancement du combat entre le héros et les ennemis IA"""
         round = 1
-        output = ""
         print("### Mode Quête ###")
         
         for enemy in self._lAvatar:
@@ -34,13 +33,16 @@ class Quest:
                 
                 round += 1
 
-            # Résultat du combat
-            if hero._life > 0:
-                print(f"{hero._nom} a vaincu {enemy._nom} !")
-                self.reward(hero)
-            else:
+            # Si le héros est mort, arrêter la quête sans récompense
+            if hero._life <= 0:
                 print(f"{hero._nom} a été vaincu par {enemy._nom}...")
-                break
+                return  # Terminer la quête sans donner la récompense
+
+            print(f"{hero._nom} a vaincu {enemy._nom} !")
+
+        # Si le héros a survécu à tous les ennemis, lui donner la récompense une fois
+        self.reward(hero)
+
 
     def reward(self, hero):
         """Récompense le héros en cas de victoire"""

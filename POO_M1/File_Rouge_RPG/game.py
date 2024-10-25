@@ -7,14 +7,14 @@ from quest import Quest
 
 def main():
     # Configuration des races
-    statElfe = Stat({'strength': 5, 'magic': 10, 'agility': 10, 'speed': 7, 'charisma': 5, 'chance': 5})  
+    statElfe = Stat({'strength': 15, 'magic': 10, 'agility': 10, 'speed': 10, 'charisma': 5, 'chance': 5})  
     elfe = Race('Elfe', statElfe)
     
     statOrc = Stat({'strength': 10, 'magic': 0, 'agility': 5, 'speed': 5, 'charisma': 2, 'chance': 3})  
     orc = Race('Orc', statOrc)
     
     # Configuration des classes
-    statWizard = Stat({'strength': 0, 'magic': 10, 'agility': 0, 'speed': 0, 'charisma': 10, 'chance': 10})
+    statWizard = Stat({'strength': 5, 'magic': 10, 'agility': 5, 'speed': 5, 'charisma': 10, 'chance': 10})
     wizard = Classe('Wizard', statWizard)
 
     statWarrior = Stat({'strength': 10, 'magic': 0, 'agility': 5, 'speed': 5, 'charisma': 5, 'chance': 5})
