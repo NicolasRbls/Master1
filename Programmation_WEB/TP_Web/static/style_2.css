@@ -1,0 +1,51 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #282c34; /* Couleur de fond sombre */
+    color: #ffffff; /* Couleur du texte */
+    margin: 0;
+    padding: 0;
+}
+
+.settings-container {
+    max-width: 600px;
+    margin: 50px auto; /* Centrer le conteneur */
+    background-color: #3c4043; /* Couleur de fond pour le conteneur */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombre autour du conteneur */
+}
+
+h2 {
+    text-align: center; /* Centrer le titre */
+}
+
+label {
+    display: block; /* Affiche les labels en bloc pour un espacement */
+    margin: 15px 0 5px; /* Espacement vertical */
+}
+
+select {
+    width: 100%; /* Prendre toute la largeur */
+    padding: 10px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 4px; /* Coins arrondis */
+    background-color: #555; /* Couleur de fond pour les sélecteurs */
+    color: #ffffff; /* Couleur du texte */
+}
+
+button {
+    background-color: #4caf50; /* Couleur du bouton */
+    color: white; /* Couleur du texte */
+    padding: 10px 15px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 4px; /* Coins arrondis */
+    cursor: pointer; /* Curseur de pointeur sur le bouton */
+    width: 100%; /* Prendre toute la largeur */
+    margin-top: 20px; /* Espacement au-dessus du bouton */
+}
+
+button:hover {
+    background-color: #45a049; /* Couleur du bouton au survol */
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu Pong</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="game-container">
+        <div class="center-line"></div>
+        <div id="player-score" class="score-display">Joueur: 0</div>
+        <div id="ai-score" class="score-display">IA: 0</div>
+        
+        <div class="paddle" id="player-paddle"></div>
+        <div class="paddle" id="ai-paddle"></div>
+        <div class="ball" id="ball"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='pong.js') }}"></script>
+</body>
+</html>

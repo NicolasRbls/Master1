@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres de Jeu - Pong</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_2.css') }}">
+</head>
+<body>
+    <div class="settings-container">
+        <h2>Paramètres de Jeu</h2>
+        
+        <label for="ball-speed">Vitesse de la balle :</label>
+        <select id="ball-speed">
+            <option value="2">Lent</option>
+            <option value="4">Moyen</option>
+            <option value="6">Rapide</option>
+            <option value="10">Très Rapide</option>
+        </select>
+
+        <label for="ai-difficulty">Difficulté de l'IA :</label>
+        <select id="ai-difficulty">
+            <option value="1">Facile</option>
+            <option value="3">Moyen</option>
+            <option value="5">Difficile</option>
+        </select>
+
+        <button id="start-game-button">Commencer le jeu</button>
+    </div>
+
+    <script>
+        document.getElementById("start-game-button").addEventListener("click", () => {
+            const ballSpeed = parseInt(document.getElementById("ball-speed").value);
+            const aiDifficulty = parseInt(document.getElementById("ai-difficulty").value);
+
+            sessionStorage.setItem("ballSpeed", ballSpeed);
+            sessionStorage.setItem("aiDifficulty", aiDifficulty);
+
+            window.location.href = "{{ url_for('pong') }}";
+        });
+    </script>
+</body>
+</html>

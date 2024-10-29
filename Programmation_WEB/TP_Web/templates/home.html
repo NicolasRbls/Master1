@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'accueil</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='auth_style.css') }}">
+</head>
+<body>
+    <div class="home-container">
+        <h2>Bienvenue, {{ session['username'] }} !</h2>
+
+        <!-- Encadré pour les informations de profil -->
+        <div class="profile-box">
+            <h3>Profil</h3>
+            <p>Nom d'utilisateur : {{ user[0] }}</p>  <!-- user[0] pour le nom d'utilisateur -->
+            <p>Score le plus élevé : {{ user[1] }}</p>  <!-- user[1] pour le score -->
+            <p>Date du meilleur score : {{ user[2] }}</p>  <!-- user[2] pour la date -->
+        </div>
+        
+
+        <!-- Tableau des 10 meilleurs scores -->
+        <div class="leaderboard-box">
+            <h3>Classement des meilleurs scores</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Classement</th>
+                        <th>Nom d'utilisateur</th>
+                        <th>Score</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for username, high_score, high_score_date in leaderboard %}
+                    <tr>
+                        <td>{{ loop.index }}</td> <!-- Affiche le rang (1, 2, 3, ...) -->
+                        <td>{{ username }}</td>
+                        <td>{{ high_score }}</td>
+                        <td>{{ high_score_date }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>        
+
+        <!-- Bouton de redirection vers le jeu -->
+        <a href="{{ url_for('diff') }}" class="play-button">Jouer au Pong</a>
+
+        <!-- Bouton de déconnexion -->
+        <a href="{{ url_for('logout') }}" class="logout-button">Déconnexion</a>
+    </div>
+
+    <script>
+        const username = "{{ session['username'] }}";
+        if (username) {
+            sessionStorage.setItem("username", username);
+        }
+    </script>
+    
+    
+</body>
+</html>

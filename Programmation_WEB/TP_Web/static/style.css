@@ -1,0 +1,68 @@
+/* style.css */
+
+body, html {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #000;
+}
+
+.game-container {
+    background-color: #006600; /* Vert foncé pour le terrain */
+    border: 2px solid white; /* Bordures blanches */
+    position: relative;
+    width: 800px;
+    height: 400px;
+}
+
+.center-line {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background-color: white; /* Ligne centrale blanche */
+    transform: translateX(-50%);
+}
+
+.paddle {
+    position: absolute;
+    width: 10px;
+    height: 80px;
+    background-color: white; /* Couleur blanche pour les raquettes */
+}
+
+.ball {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+#player-paddle {
+    left: 10px;
+}
+
+#ai-paddle {
+    right: 10px;
+}
+
+.score-display {
+    position: absolute;
+    color: white;
+    font-size: 20px;
+}
+
+#player-score {
+    top: 10px;
+    left: 20px;
+}
+
+#ai-score {
+    top: 10px;
+    right: 20px;
+}

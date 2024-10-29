@@ -1,0 +1,152 @@
+/* Style général */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Container pour les formulaires */
+.auth-container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Titre */
+h2 {
+    color: #333;
+    margin-top: 50px; /* Espace supplémentaire en haut pour dégager le titre */
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+
+/* Labels et champs de saisie */
+label {
+    display: block;
+    font-weight: bold;
+    margin: 15px 0 5px;
+    text-align: left;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Bouton de soumission */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Lien vers la page de connexion */
+.auth-container p {
+    margin-top: 15px;
+    color: #555;
+}
+
+.auth-container a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.auth-container a:hover {
+    text-decoration: underline;
+}
+
+
+/* Conteneur principal */
+.home-container {
+    max-width: 800px;
+    margin: 20px auto; /* Ajout de marge en haut et en bas pour l'espacement */
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box; /* Assure que la marge ne coupe pas le contenu */
+}
+
+/* Profil utilisateur */
+.profile-box, .leaderboard-box {
+    background-color: #f0f0f5;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-box h3, .leaderboard-box h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.play-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.play-button:hover {
+    background-color: #45a049;
+}
+
+.logout-button {
+    background-color: #ff4c4c; /* Couleur rouge */
+    color: white; /* Texte blanc */
+    padding: 10px 20px; /* Espacement */
+    text-decoration: none; /* Pas de soulignement */
+    border-radius: 5px; /* Coins arrondis */
+}
+
+.logout-button:hover {
+    background-color: #ff1a1a; /* Couleur au survol */
+}
