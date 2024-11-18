@@ -19,3 +19,64 @@ Ajout des mécanismes pour taurens et humains avec leurs caractéristiques spéc
 5. Intégration Backend :
 Intégrer toute la logique dans une API Python avec Flask ou Django.
 Gérer les sessions et les sauvegardes de parties côté serveur.
+
+
+-----------------------------------------------------------------------------------------------------
+
+2. Classes Case et Obstacle
+Actuellement :
+Les cases du plateau sont initialisées avec des types génériques (gain, obstacle, pénalité).
+À améliorer :
+Créer une classe Case qui contient :
+Un attribut gain pour les points de la case.
+Un attribut perso pour le personnage présent sur la case (ou None si la case est vide).
+Un attribut obs pour un obstacle (ou None si la case est libre).
+Des méthodes comme placerPersonnage, placerObstacle, et estLibre.
+Créer une classe Obstacle qui contient :
+Un attribut penalite (nombre de points à soustraire).
+Une méthode getPenalite pour accéder à la valeur de la pénalité.
+
+3. Gestion des pénalités et des déplacements bloqués
+Actuellement :
+Les pénalités sont appliquées de manière générique lorsque les personnages rencontrent des obstacles.
+À améliorer :
+Ajouter une logique qui :
+Empêche le déplacement si la case cible est occupée par un autre personnage.
+Applique une pénalité équivalente au gain de la case si elle est occupée.
+Applique une pénalité spécifique si un obstacle est présent sur la case cible.
+Permet de retirer un personnage d’une case (méthode enleverPersonnage).
+
+4. Système de Points
+Actuellement :
+Les points sont affichés au fur et à mesure des déplacements.
+À améliorer :
+Associer des points à chaque joueur (via une méthode modifierPoints).
+Ajouter un affichage détaillé des scores des joueurs à la fin de la partie.
+Identifier automatiquement le ou les gagnants selon les scores.
+
+5. Initialisation du Plateau
+Actuellement :
+Les cases du plateau sont initialisées avec des types aléatoires (gain, penalty, ou obstacle).
+À améliorer :
+Initialiser les cases avec une valeur de gain aléatoire et ajouter des obstacles uniquement lorsque le nombre aléatoire est un multiple de 5.
+Limiter le nombre total d’obstacles en fonction d’un paramètre maximum (ex. : nbObstacles).
+
+7. Résultats et Affichages
+Actuellement :
+Le jeu affiche les déplacements et les événements au fur et à mesure.
+À améliorer :
+Ajouter des affichages finaux pour :
+Le classement des joueurs avec leur score total.
+L’état final du plateau avec les personnages et obstacles sur chaque case.
+Le gagnant ou les gagnants du jeu.
+
+8. Logique de Jeu
+Actuellement :
+Les joueurs avancent tour par tour jusqu’à la fin du plateau.
+À améliorer :
+Implémenter une classe Jeu qui :
+Initialise les cases et les personnages.
+Positionne les personnages au début du plateau.
+Gère les étapes de jeu en appelant les déplacements des personnages.
+Affiche les résultats détaillés à la fin.
+
