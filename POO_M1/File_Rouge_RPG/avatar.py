@@ -1,6 +1,8 @@
 from stats import Stat
 from item import Bag, Equipment
 import random
+import math
+
 
 
 class Avatar:
@@ -97,11 +99,21 @@ class Hero(Avatar):
         self._xp = 0
         self._profession = targs['profession']
 
-    def lvl_up(self):
-        self._lvl += 1
+    def lvl(self):
+        lvl = math.floor(self._xp / 100)  #100 XP nécessaires par niveau
+        if lvl < 1:
+            lvl = 1
+        if lvl > self._lvl:
+            print("### Nouveau niveau atteint ! ###")
+            self.newLvl()
+        self._lvl = lvl  # Met à jour le niveau du héros
+        return lvl
+
+    def newLvl(self):
         for stat in self._stat.__dict__:
             self._stat.__dict__[stat] += 5
         self._life = self._stat.life_point
+        print("### Amélioration des statistiques ###")
 
     def __str__(self):
         return f"Héros : {self._nom}, Profession : {self._profession}, Niveau : {self._lvl}, Race : {self._race}, Classe : {self._classe}"

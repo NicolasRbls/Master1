@@ -48,6 +48,7 @@ class Quest:
         """Récompense le héros en cas de victoire"""
         print(f"Récompense : {self._itemGift}")
         hero._xp += 10 * self._lvl  # Récompense en XP
-        hero._bag.addItem(self._itemGift)
-        hero.lvl_up()  # Mise à jour du niveau du héros
         print(f"{hero._nom} gagne {10 * self._lvl} points d'expérience et un objet !")
+        hero._bag.addItem(self._itemGift)
+        hero.lvl()  # Vérifie automatiquement si le héros doit monter de niveau
+
