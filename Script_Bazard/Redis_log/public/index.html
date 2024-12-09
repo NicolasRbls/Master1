@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logger Site</title>
+    <script>
+        // Fonction pour envoyer des logs au backend
+        async function logAction(action, details) {
+            const response = await fetch('/log', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    action,
+                    details,
+                    timestamp: new Date().toISOString() // Heure actuelle
+                })
+            });
+            console.log(await response.json());
+        }
+
+        // Enregistrer un clic sur un bouton
+        function handleButtonClick(buttonId) {
+            logAction('button_click', { buttonId });
+        }
+
+        // Enregistrer la saisie d'un texte
+        function handleInput(event, inputId) {
+            logAction('text_input', { inputId, value: event.target.value });
+        }
+    </script>
+</head>
+<body>
+    <h1>Site de démonstration avec logs</h1>
+    <button onclick="handleButtonClick('button1')">Bouton 1</button>
+    <button onclick="handleButtonClick('button2')">Bouton 2</button>
+
+    <br><br>
+
+    <label for="input1">Champ de texte 1 :</label>
+    <input id="input1" type="text" oninput="handleInput(event, 'input1')" />
+
+    <br><br>
+
+    <label for="input2">Champ de texte 2 :</label>
+    <input id="input2" type="text" oninput="handleInput(event, 'input2')" />
+</body>
+</html>
